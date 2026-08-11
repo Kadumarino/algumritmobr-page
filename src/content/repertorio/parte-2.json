@@ -1,0 +1,31 @@
+{
+  "parte": "Segunda Parte",
+  "ordem": 2,
+  "formacao": "Os papéis se invertem: o outro músico assume o violão, o vocal principal e a primeira voz, enquanto o primeiro passa para o cajon e a segunda voz.",
+  "decadas": [
+    {
+      "decada": "Anos 60",
+      "musicas": [
+        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+      ]
+    },
+    {
+      "decada": "Anos 70",
+      "musicas": [
+        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+      ]
+    },
+    {
+      "decada": "Anos 80",
+      "musicas": [
+        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+      ]
+    }
+  ]
+}

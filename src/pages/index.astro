@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
+// TODO: substituir pelo ID real do vídeo de apresentação do duo no YouTube.
+const heroYoutubeId = 'aqz-KE-bpKQ';
+---
+
+<BaseLayout title="Início" description={siteConfig.descricaoCurta}>
+  <section class="hero">
+    <div class="hero-media">
+      <iframe
+        src={`https://www.youtube.com/embed/${heroYoutubeId}?autoplay=1&mute=1&loop=1&playlist=${heroYoutubeId}&controls=0&modestbranding=1&rel=0`}
+        title="Vídeo de apresentação — Algum Ritmo"
+        allow="autoplay; encrypted-media"
+        loading="lazy"
+      ></iframe>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content container">
+      <span class="eyebrow">Duo Acústico</span>
+      <h1>{siteConfig.nome}</h1>
+      <p class="hero-tagline">{siteConfig.tagline}</p>
+      <p class="hero-description">
+        Shows sofisticados para hotéis, casas noturnas e eventos exclusivos, com repertório dos
+        anos 60 aos dias atuais — e a marca registrada do duo: a troca de papéis ao vivo entre os
+        músicos.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={`${base}contato/`}>Solicitar Orçamento</a>
+        <a class="btn btn-outline" href={`${base}repertorio/`}>Ver Repertório</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">O Diferencial</span>
+        <h2>Um show, duas experiências</h2>
+      </div>
+      <div class="grid grid--3">
+        <div class="card">
+          <h3>Troca de Papéis</h3>
+          <p>
+            Na primeira parte, um músico assume o violão, o vocal principal e a primeira voz,
+            enquanto o parceiro toca cajon e faz a segunda voz. Na segunda parte, os papéis se
+            invertem por completo.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Repertório por Décadas</h3>
+          <p>
+            Dos anos 60 aos sucessos atuais, um repertório cuidadosamente construído para o
+            clima de cada evento.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Eventos Sofisticados</h3>
+          <p>
+            Anos de mercado em hotéis, casas noturnas e celebrações que exigem elegância e
+            profissionalismo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy">
+    <div class="container" style="text-align:center;">
+      <h2>Pronto para elevar o seu evento?</h2>
+      <p>
+        Solicite um orçamento sem compromisso e leve a experiência Algum Ritmo para o seu hotel,
+        casa noturna ou celebração.
+      </p>
+      <a class="btn btn-primary" href={`${base}contato/`}>Fale Conosco</a>
+    </div>
+  </section>
+</BaseLayout>

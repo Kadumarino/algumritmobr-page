@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../data/site';
+
+const blocos = (await getCollection('repertorio')).sort((a, b) => a.data.ordem - b.data.ordem);
+---
+
+<BaseLayout
+  title="Repertório"
+  description="Repertório do duo Algum Ritmo organizado por década, playlist do Spotify e Instagram."
+>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Repertório</span>
+        <h1>Um repertório para cada momento</h1>
+        <p>
+          O show é dividido em duas partes, cada uma com uma formação e um recorte de décadas
+          diferente. Confira uma amostra do repertório abaixo.
+        </p>
+      </div>
+
+      {
+        blocos.map((bloco) => (
+          <div class="repertorio-bloco">
+            <div class="repertorio-bloco-header">
+              <h2>{bloco.data.parte}</h2>
+              <p>{bloco.data.formacao}</p>
+            </div>
+            <div class="repertorio-decadas">
+              {bloco.data.decadas.map((decada) => (
+                <div class="decada-card card">
+                  <h4>{decada.decada}</h4>
+                  <ul>
+                    {decada.musicas.map((musica) => (
+                      <li>
+                        {musica.titulo}
+                        <span class="artista">{musica.artista}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+
+      <p style="text-align:center; font-size:0.9rem;">
+        {/* TODO: repertório completo com as músicas reais — enviar lista final para atualização. */}
+        Lista acima é uma amostra. O repertório completo é adaptado conforme o perfil do evento.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Ouça Agora</span>
+        <h2>Playlist no Spotify</h2>
+      </div>
+      <div class="embed-wrap">
+        {/* TODO: substituir pelo ID real da playlist do duo no Spotify (ver src/data/site.ts). */}
+        <iframe
+          src={`https://open.spotify.com/embed/playlist/${siteConfig.spotifyPlaylistId}?utm_source=generator&theme=0`}
+          height="380"
+          loading="lazy"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          title="Playlist Algum Ritmo no Spotify"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="instagram-cta">
+        <h2>Acompanhe nos bastidores</h2>
+        <p>
+          Siga o Algum Ritmo no Instagram para ver vídeos, próximos eventos e bastidores dos
+          shows.
+        </p>
+        <a
+          class="btn btn-outline--dark"
+          href={siteConfig.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Seguir {siteConfig.instagramHandle}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Sobre"
+  description="Conheça a história do duo Algum Ritmo e o formato único de troca de papéis ao vivo entre os músicos."
+>
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-media">
+        <img
+          src={`${base}images/sobre/placeholder-duo.svg`}
+          alt="Foto do duo Algum Ritmo — placeholder, substituir por foto real"
+          width="1200"
+          height="1400"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <span class="eyebrow">Nossa História</span>
+        <h1>Anos de estrada, uma só paixão</h1>
+        <p>
+          {/* TODO: substituir pelo texto final com a história real do duo (ano de início, trajetória, principais eventos e hotéis já atendidos). */}
+          O Algum Ritmo é um duo acústico com anos de mercado, especializado em levar
+          sofisticação e emoção para hotéis, casas noturnas e eventos exclusivos. Ao longo da
+          trajetória, o duo construiu um repertório que atravessa décadas e um formato de show
+          que já é a sua marca registrada.
+        </p>
+        <p>
+          Mais do que música, o Algum Ritmo entrega uma experiência: presença de palco, repertório
+          certeiro para cada tipo de público e um cuidado especial com o clima de cada evento —
+          seja um casamento em um hotel cinco estrelas, seja uma noite descontraída em uma casa
+          noturna.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Formato Exclusivo</span>
+        <h2>A troca de papéis ao vivo</h2>
+        <p>
+          O grande diferencial do show é a inversão de papéis entre os músicos, criando duas
+          atmosferas distintas em uma única apresentação.
+        </p>
+      </div>
+
+      <div class="roles-grid">
+        <div class="role-card">
+          <span class="role-number">01</span>
+          <h3>Primeira Parte</h3>
+          <p>
+            Um músico assume o violão, o vocal principal e a primeira voz, enquanto o parceiro
+            toca cajon e faz a segunda voz. Repertório dos anos 80, 90 e sucessos atuais.
+          </p>
+        </div>
+        <div class="role-card">
+          <span class="role-number">02</span>
+          <h3>Segunda Parte</h3>
+          <p>
+            Os papéis se invertem: o outro músico assume o violão, o vocal principal e a
+            primeira voz, enquanto o primeiro passa para o cajon e a segunda voz. Repertório dos
+            anos 60, 70 e 80.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,31 @@
+{
+  "parte": "Primeira Parte",
+  "ordem": 1,
+  "formacao": "Um músico assume o violão, o vocal principal e a primeira voz, enquanto o parceiro toca o cajon e faz a segunda voz.",
+  "decadas": [
+    {
+      "decada": "Anos 80",
+      "musicas": [
+        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+      ]
+    },
+    {
+      "decada": "Anos 90",
+      "musicas": [
+        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+      ]
+    },
+    {
+      "decada": "Atualidades",
+      "musicas": [
+        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
+        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+      ]
+    }
+  ]
+}

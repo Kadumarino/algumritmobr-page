@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="160" viewBox="0 0 480 160">
+  <rect width="480" height="160" fill="#0a0a0a"/>
+  <circle cx="60" cy="80" r="28" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <rect x="52" y="45" width="16" height="40" rx="8" fill="#ffffff"/>
+  <line x1="60" y1="108" x2="60" y2="120" stroke="#ffffff" stroke-width="4"/>
+  <line x1="42" y1="120" x2="78" y2="120" stroke="#ffffff" stroke-width="4"/>
+  <text x="110" y="75" font-family="Georgia, 'Playfair Display', serif" font-size="34" fill="#ffffff">Algum Ritmo</text>
+  <text x="110" y="105" font-family="Arial, sans-serif" font-size="16" fill="#c9a34e">Duo Acústico</text>
+</svg>

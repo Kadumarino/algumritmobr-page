@@ -1,0 +1,62 @@
+---
+import Logo from './Logo.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const navItems = [
+  { href: '', label: 'Início' },
+  { href: 'sobre/', label: 'Sobre' },
+  { href: 'repertorio/', label: 'Repertório' },
+  { href: 'book/', label: 'Book' },
+  { href: 'depoimentos/', label: 'Depoimentos' },
+  { href: 'contato/', label: 'Contato' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container">
+    <a href={base} class="logo-link" aria-label="Algum Ritmo — página inicial">
+      <Logo variant="dark" />
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+        &#9776;
+      </button>
+      <ul class="nav-list">
+        {
+          navItems.map((item) => {
+            const href = base + item.href;
+            const isActive = currentPath === href;
+            return (
+              <li>
+                <a href={href} aria-current={isActive ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const list = document.querySelector<HTMLUListElement>('.nav-list');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = list?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
+
+  list?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      list.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

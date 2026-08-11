@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const depoimentos = await getCollection('depoimentos');
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Depoimentos"
+  description="Depoimentos de hotéis, casas noturnas e eventos que já contrataram o duo Algum Ritmo."
+>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Depoimentos</span>
+        <h1>Quem já viveu a experiência</h1>
+        <p>
+          {/* TODO: substituir pelos depoimentos reais recebidos de hotéis, casas noturnas e clientes. */}
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        {
+          depoimentos.map((item) => (
+            <div class="testimonial-card">
+              <span class="quote-mark">&ldquo;</span>
+              <p>{item.data.texto}</p>
+              <p class="autor">{item.data.nome}</p>
+              <p class="evento">{item.data.evento}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy">
+    <div class="container" style="text-align:center;">
+      <h2>Seja o próximo evento inesquecível</h2>
+      <p>Leve o Algum Ritmo para o seu hotel, casa noturna ou celebração.</p>
+      <a class="btn btn-primary" href={`${base}contato/`}>Solicitar Orçamento</a>
+    </div>
+  </section>
+</BaseLayout>

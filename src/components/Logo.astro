@@ -1,0 +1,16 @@
+---
+interface Props {
+  variant?: 'dark' | 'light';
+  class?: string;
+}
+
+const { variant = 'dark', class: className = '' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const src =
+  variant === 'dark'
+    ? `${base}images/logo/placeholder-logo-dark.svg`
+    : `${base}images/logo/placeholder-logo-light.svg`;
+---
+
+{/* TODO: substituir o placeholder pelos 2 arquivos de logotipo oficiais assim que forem enviados. */}
+<img src={src} alt="Algum Ritmo — Duo Acústico" width="170" height="56" class={className} />
