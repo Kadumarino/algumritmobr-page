@@ -2,10 +2,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// TODO: troque "SEU-USUARIO" pelo usuário/organização real do GitHub assim que o
-// repositório for criado, para as tags de SEO (canonical, sitemap, OG) ficarem corretas.
-const SITE_URL = 'https://SEU-USUARIO.github.io';
-const BASE_PATH = '/web-page-algumritmo';
+const SITE_URL = 'https://kadumarino.github.io';
+const BASE_PATH = '/algumritmobr-page';
 
 // https://astro.build/config
 export default defineConfig({

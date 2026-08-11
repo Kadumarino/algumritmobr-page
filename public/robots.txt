@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://SEU-USUARIO.github.io/web-page-algumritmo/sitemap-index.xml
+Sitemap: https://kadumarino.github.io/algumritmobr-page/sitemap-index.xml
