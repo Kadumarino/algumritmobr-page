@@ -17,7 +17,8 @@
   --color-gray-300: #d8d8d8;
 
   /* Tipografia */
-  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Cinzel', Georgia, 'Times New Roman', serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* Espaçamentos */
@@ -264,6 +265,12 @@ p {
   align-items: center;
 }
 
+.site-logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -455,13 +462,13 @@ p {
   height: 100vh;
   min-height: 56.25vw;
   transform: translate(-50%, -50%);
-  pointer-events: none;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.85) 100%);
+  pointer-events: none;
 }
 
 .hero-content {
@@ -476,8 +483,9 @@ p {
 }
 
 .hero-tagline {
-  font-family: var(--font-serif);
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
   color: var(--color-gold);
   margin-bottom: var(--space-2);
 }
@@ -601,78 +609,30 @@ p {
   background-color: var(--color-off-white);
 }
 
-/* Book — galeria e vídeos
+/* Book — galeria (embeds do Instagram) e vídeos
    ========================================================================== */
 
-.gallery-grid {
+.instagram-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-2);
+  gap: var(--space-3);
+  justify-items: center;
 }
 
-@media (max-width: 760px) {
-  .gallery-grid {
+.instagram-grid iframe {
+  margin: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .instagram-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
-  .gallery-grid {
+@media (max-width: 600px) {
+  .instagram-grid {
     grid-template-columns: 1fr;
   }
-}
-
-.gallery-item {
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  background: none;
-  overflow: hidden;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  transition: transform var(--transition-base);
-}
-
-.gallery-item:hover img {
-  transform: scale(1.04);
-}
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 300;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(10, 10, 10, 0.92);
-  padding: var(--space-3);
-}
-
-.lightbox.is-open {
-  display: flex;
-}
-
-.lightbox img {
-  max-width: min(90vw, 1100px);
-  max-height: 85vh;
-  border: 2px solid var(--color-white);
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 24px;
-  right: 32px;
-  background: none;
-  border: none;
-  color: var(--color-white);
-  font-size: 2.5rem;
-  line-height: 1;
-  cursor: pointer;
 }
 
 .video-grid {

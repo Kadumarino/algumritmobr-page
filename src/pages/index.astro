@@ -1,17 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../data/site';
+import videosData from '../data/videos.json';
 
 const base = import.meta.env.BASE_URL;
-// TODO: substituir pelo ID real do vídeo de apresentação do duo no YouTube.
-const heroYoutubeId = 'aqz-KE-bpKQ';
+const heroYoutubeId = 'HUBEsOYtC4w';
 ---
 
 <BaseLayout title="Início" description={siteConfig.descricaoCurta}>
   <section class="hero">
     <div class="hero-media">
       <iframe
-        src={`https://www.youtube.com/embed/${heroYoutubeId}?autoplay=1&mute=1&loop=1&playlist=${heroYoutubeId}&controls=0&modestbranding=1&rel=0`}
+        id="yt-player-hero"
+        src={`https://www.youtube.com/embed/${heroYoutubeId}?autoplay=1&mute=1&loop=1&playlist=${heroYoutubeId}&controls=1&modestbranding=1&rel=0&enablejsapi=1`}
         title="Vídeo de apresentação — Algum Ritmo"
         allow="autoplay; encrypted-media"
         loading="lazy"
@@ -19,12 +20,12 @@ const heroYoutubeId = 'aqz-KE-bpKQ';
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-content container">
-      <span class="eyebrow">Duo Acústico</span>
+      <span class="eyebrow">Projeto Acústico</span>
       <h1>{siteConfig.nome}</h1>
-      <p class="hero-tagline">{siteConfig.tagline}</p>
+      <p class="hero-tagline">Levando a música ao além!</p>
       <p class="hero-description">
-        Shows sofisticados para hotéis, casas noturnas e eventos exclusivos, com repertório dos
-        anos 60 aos dias atuais — e a marca registrada do duo: a troca de papéis ao vivo entre os
+        Shows para hotéis, casas noturnas e eventos exclusivos, com repertório dos anos 60 aos
+        dias atuais — e a marca registrada do projeto: a troca de papéis ao vivo entre os
         músicos.
       </p>
       <div class="hero-actions">
@@ -67,6 +68,32 @@ const heroYoutubeId = 'aqz-KE-bpKQ';
     </div>
   </section>
 
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Vídeos</span>
+        <h2>Momentos ao vivo</h2>
+      </div>
+      <div class="video-grid">
+        {
+          videosData.videos.map((video, index) => (
+            <div class="video-item">
+              <iframe
+                id={`yt-player-${index}`}
+                src={`https://www.youtube.com/embed/${video.youtubeId}?enablejsapi=1`}
+                title={video.titulo}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              />
+              <p>{video.titulo}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="section section--navy">
     <div class="container" style="text-align:center;">
       <h2>Pronto para elevar o seu evento?</h2>
@@ -78,3 +105,48 @@ const heroYoutubeId = 'aqz-KE-bpKQ';
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Garante que, ao dar play em um vídeo do YouTube, os demais vídeos da página pausem automaticamente.
+  function initYouTubePlayers() {
+    const iframes = document.querySelectorAll<HTMLIFrameElement>('iframe[id^="yt-player-"]');
+    if (!iframes.length) return;
+
+    const players: any[] = [];
+
+    iframes.forEach((iframe) => {
+      const player = new (window as any).YT.Player(iframe.id, {
+        events: {
+          onReady: (event: any) => {
+            if (iframe.id === 'yt-player-hero') {
+              // Autoplay precisa começar mudo (política dos navegadores); tentamos desmutar
+              // em seguida, mas o visitante sempre pode ajustar o som pelos controles do player.
+              event.target.unMute();
+              event.target.setVolume(100);
+              event.target.playVideo();
+            }
+          },
+          onStateChange: (event: any) => {
+            if (event.data === (window as any).YT.PlayerState.PLAYING) {
+              players.forEach((otherPlayer) => {
+                if (otherPlayer !== player && typeof otherPlayer.pauseVideo === 'function') {
+                  otherPlayer.pauseVideo();
+                }
+              });
+            }
+          },
+        },
+      });
+      players.push(player);
+    });
+  }
+
+  if ((window as any).YT && (window as any).YT.Player) {
+    initYouTubePlayers();
+  } else {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+    (window as any).onYouTubeIframeAPIReady = initYouTubePlayers;
+  }
+</script>

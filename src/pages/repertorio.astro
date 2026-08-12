@@ -8,7 +8,7 @@ const blocos = (await getCollection('repertorio')).sort((a, b) => a.data.ordem -
 
 <BaseLayout
   title="Repertório"
-  description="Repertório do duo Algum Ritmo organizado por década, playlist do Spotify e Instagram."
+  description="Repertório do projeto Algum Ritmo organizado por década, playlist do Spotify e Instagram."
 >
   <section class="section">
     <div class="container">
@@ -61,7 +61,6 @@ const blocos = (await getCollection('repertorio')).sort((a, b) => a.data.ordem -
         <h2>Playlist no Spotify</h2>
       </div>
       <div class="embed-wrap">
-        {/* TODO: substituir pelo ID real da playlist do duo no Spotify (ver src/data/site.ts). */}
         <iframe
           src={`https://open.spotify.com/embed/playlist/${siteConfig.spotifyPlaylistId}?utm_source=generator&theme=0`}
           height="380"
@@ -78,17 +77,27 @@ const blocos = (await getCollection('repertorio')).sort((a, b) => a.data.ordem -
       <div class="instagram-cta">
         <h2>Acompanhe nos bastidores</h2>
         <p>
-          Siga o Algum Ritmo no Instagram para ver vídeos, próximos eventos e bastidores dos
-          shows.
+          Siga o Algum Ritmo no Instagram e no YouTube para ver vídeos, próximos eventos e
+          bastidores dos shows.
         </p>
-        <a
-          class="btn btn-outline--dark"
-          href={siteConfig.instagramUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Seguir {siteConfig.instagramHandle}
-        </a>
+        <div class="hero-actions" style="justify-content:center;">
+          <a
+            class="btn btn-outline--dark"
+            href={siteConfig.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Seguir {siteConfig.instagramHandle}
+          </a>
+          <a
+            class="btn btn-outline--dark"
+            href={siteConfig.youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver no YouTube
+          </a>
+        </div>
       </div>
     </div>
   </section>

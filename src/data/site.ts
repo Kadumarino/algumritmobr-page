@@ -4,26 +4,27 @@
 
 export const siteConfig = {
   nome: 'Algum Ritmo',
-  tagline: 'Duo Acústico para Eventos Sofisticados',
+  tagline: 'Projeto Acústico que eleva a música para outro mundo',
   descricaoCurta:
-    'Duo acústico com anos de mercado, especializado em hotéis, casas noturnas e eventos sofisticados. Repertório dos anos 60 aos dias atuais, com troca de papéis ao vivo entre os músicos.',
+    'Projeto acústico com anos de mercado, especializado em hotéis, casas noturnas e eventos sofisticados. Repertório dos anos 60 aos dias atuais, com troca de papéis ao vivo entre os músicos.',
 
-  // TODO: substituir pelo número real de WhatsApp (com DDI+DDD, somente números).
-  whatsappNumero: '5511999999999',
+  whatsappNumero: '5519986021602',
   whatsappMensagemPadrao:
     'Olá! Gostaria de solicitar um orçamento para um evento.',
 
-  // TODO: confirmar/atualizar o @ real do Instagram do duo.
-  instagramHandle: '@algumritmo',
-  instagramUrl: 'https://instagram.com/algumritmo',
+  // Segundo contato (exibido na página de Contato).
+  whatsappNumeroSecundario: '5519988200563',
+  whatsappNomeSecundario: 'Guilherme Foganhollo',
+  whatsappNomePrincipal: 'Carlos Eduardo',
 
-  // TODO: substituir pelo e-mail real de contato.
-  emailContato: 'contato@algumritmo.com.br',
+  instagramHandle: '@algumritmobr',
+  instagramUrl: 'https://instagram.com/algumritmobr',
 
-  // TODO: substituir pelo ID da playlist real do duo no Spotify.
-  // Placeholder atual: playlist pública "Top 50 Global" do Spotify, apenas para demonstração do embed.
-  spotifyPlaylistId: '37i9dQZEVXbMDoHDwVN2tF',
+  youtubeUrl: 'https://youtube.com/@algumritmobr',
 
-  // TODO: criar um formulário em https://formspree.io e substituir pelo endpoint real.
-  formspreeEndpoint: 'https://formspree.io/f/SUBSTITUIR',
+  emailContato: 'algumritmobr@gmail.com',
+
+  spotifyPlaylistId: '27g2DyU29lJQZs9zfHDXpv',
+
+  formspreeEndpoint: 'https://formspree.io/f/xvkpankv',
 } as const;

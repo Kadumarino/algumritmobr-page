@@ -1,105 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import book from '../data/book.json';
-
-const base = import.meta.env.BASE_URL;
+import instagramPosts from '../data/instagram-posts.json';
 ---
 
 <BaseLayout
   title="Book"
-  description="Fotos e vídeos do duo Algum Ritmo em apresentações — hospedados diretamente no site."
+  description="Fotos e vídeos do duo Algum Ritmo em apresentações — direto do Instagram."
 >
   <section class="section">
     <div class="container">
       <div class="section-title">
         <span class="eyebrow">Book</span>
         <h1>Fotos e vídeos dos shows</h1>
-        <p>
-          {/* TODO: substituir as fotos placeholder pelas fotos reais em alta qualidade assim que enviadas. */}
-          Um pouco do que é viver a experiência Algum Ritmo ao vivo.
-        </p>
+        <p>Um pouco do que é viver a experiência Algum Ritmo ao vivo, direto do nosso Instagram.</p>
       </div>
 
-      <div class="gallery-grid">
+      <div class="instagram-grid">
         {
-          book.fotos.map((foto, index) => (
-            <button
-              class="gallery-item"
-              type="button"
-              data-index={index}
-              aria-label={`Ampliar: ${foto.alt}`}
-            >
-              <img src={`${base}${foto.src}`} alt={foto.alt} loading="lazy" width="1200" height="800" />
-            </button>
+          instagramPosts.map((post) => (
+            <blockquote
+              class="instagram-media"
+              data-instgrm-permalink={post.url}
+              data-instgrm-version="14"
+            />
           ))
         }
       </div>
     </div>
   </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-title">
-        <span class="eyebrow">Vídeos</span>
-        <h2>Momentos ao vivo</h2>
-        <p>
-          {/* TODO: substituir pelos vídeos reais do canal do YouTube do duo (ver src/data/book.json). */}
-        </p>
-      </div>
-      <div class="video-grid">
-        {
-          book.videos.map((video) => (
-            <div class="video-item">
-              <iframe
-                src={`https://www.youtube.com/embed/${video.youtubeId}`}
-                title={video.titulo}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              />
-              <p>{video.titulo}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Fechar">&times;</button>
-    <img id="lightbox-img" src="" alt="" />
-  </div>
 </BaseLayout>
 
-<script>
-  const items = document.querySelectorAll<HTMLButtonElement>('.gallery-item');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
-  const closeBtn = document.getElementById('lightbox-close');
-
-  function openLightbox(img: HTMLImageElement) {
-    if (!lightbox || !lightboxImg) return;
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightbox.classList.add('is-open');
-  }
-
-  function closeLightbox() {
-    lightbox?.classList.remove('is-open');
-  }
-
-  items.forEach((item) => {
-    item.addEventListener('click', () => {
-      const img = item.querySelector('img');
-      if (img) openLightbox(img);
-    });
-  });
-
-  closeBtn?.addEventListener('click', closeLightbox);
-  lightbox?.addEventListener('click', (event) => {
-    if (event.target === lightbox) closeLightbox();
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeLightbox();
-  });
-</script>
+<script async src="https://www.instagram.com/embed.js" is:inline></script>

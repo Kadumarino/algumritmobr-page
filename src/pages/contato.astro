@@ -5,6 +5,9 @@ import { siteConfig } from '../data/site';
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumero}?text=${encodeURIComponent(
   siteConfig.whatsappMensagemPadrao
 )}`;
+const whatsappUrlSecundario = `https://wa.me/${siteConfig.whatsappNumeroSecundario}?text=${encodeURIComponent(
+  siteConfig.whatsappMensagemPadrao
+)}`;
 ---
 
 <BaseLayout
@@ -23,7 +26,6 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumero}?text=${encodeURI
           </p>
         </div>
 
-        {/* TODO: criar um formulário em https://formspree.io e atualizar o endpoint em src/data/site.ts */}
         <form action={siteConfig.formspreeEndpoint} method="POST">
           <div class="form-row">
             <div class="form-field">
@@ -79,16 +81,26 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumero}?text=${encodeURI
         <ul>
           <li>
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-              WhatsApp: falar agora
+              WhatsApp: {siteConfig.whatsappNomePrincipal}
             </a>
           </li>
           <li>
-            <a href={`mailto:${siteConfig.emailContato}`}>{siteConfig.emailContato}</a>
+            <a href={whatsappUrlSecundario} target="_blank" rel="noopener noreferrer">
+              WhatsApp: {siteConfig.whatsappNomeSecundario}
+            </a>
           </li>
           <li>
             <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
               Instagram {siteConfig.instagramHandle}
             </a>
+          </li>
+          <li>
+            <a href={siteConfig.youtubeUrl} target="_blank" rel="noopener noreferrer">
+              YouTube
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${siteConfig.emailContato}`}>E-mail: {siteConfig.emailContato}</a>
           </li>
         </ul>
         <p>Atendemos hotéis, casas noturnas, casamentos e eventos corporativos em todo o Brasil.</p>
