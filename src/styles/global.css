@@ -115,6 +115,18 @@ p {
   margin-bottom: var(--space-1);
 }
 
+/* Contorno preto em qualquer texto dourado, para manter a legibilidade */
+.eyebrow,
+.hero-tagline,
+.role-card .role-number,
+.testimonial-card .quote-mark,
+.nav-list a:hover,
+.nav-list a[aria-current='page'],
+.contact-info-card a:hover {
+  -webkit-text-stroke: 0.6px var(--color-black);
+  paint-order: stroke fill;
+}
+
 /* Layout utilities
    ========================================================================== */
 
@@ -174,10 +186,12 @@ p {
 .btn-primary {
   background-color: var(--color-gold);
   color: var(--color-black);
+  border-color: var(--color-black);
 }
 
 .btn-primary:hover {
   background-color: var(--color-white);
+  border-color: var(--color-navy);
 }
 
 .btn-outline {
@@ -189,6 +203,7 @@ p {
 .btn-outline:hover {
   background-color: var(--color-white);
   color: var(--color-black);
+  border-color: var(--color-black);
 }
 
 .btn-outline--dark {
@@ -235,6 +250,11 @@ p {
   border: 1px solid var(--color-gray-300);
   padding: var(--space-3);
   transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.grid--3 .card {
+  border-color: var(--color-black);
+  text-align: center;
 }
 
 .card:hover {
@@ -339,19 +359,68 @@ p {
   padding-block: var(--space-5);
 }
 
+.site-footer p {
+  color: var(--color-gray-300);
+}
+
 .site-footer a:hover {
   color: var(--color-gold);
 }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-4);
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.footer-logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.footer-logo {
+  height: 56px;
+  width: auto;
+}
+
+.footer-tagline {
+  margin: 0;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+}
+
+.footer-col h4 {
+  color: var(--color-white);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.footer-list li {
+  margin-bottom: 0.35rem;
 }
 
 @media (max-width: 700px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
+  .footer-brand-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-tagline {
+    white-space: normal;
+  }
+
+  .footer-columns {
+    flex-direction: column;
     text-align: center;
   }
 }
@@ -441,7 +510,8 @@ p {
   position: relative;
   min-height: 92vh;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
   overflow: hidden;
   background-color: var(--color-black);
   color: var(--color-white);
@@ -467,19 +537,31 @@ p {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.85) 100%);
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.45) 0%, rgba(5, 5, 5, 0.7) 45%, rgba(5, 5, 5, 0.92) 100%);
   pointer-events: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
+  width: 100%;
+  text-align: left;
   padding-block: var(--space-6) var(--space-5);
+}
+
+.hero-content::before {
+  content: '';
+  position: absolute;
+  inset: -10% -10% -10%;
+  z-index: -1;
+  background: radial-gradient(120% 100% at 0% 100%, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 65%);
+  pointer-events: none;
 }
 
 .hero-content h1 {
   color: var(--color-white);
   margin-bottom: var(--space-1);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
 }
 
 .hero-tagline {
@@ -488,11 +570,17 @@ p {
   font-size: clamp(1.3rem, 2.4vw, 1.75rem);
   color: var(--color-gold);
   margin-bottom: var(--space-2);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.hero-content .eyebrow {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 
 .hero-description {
   max-width: 640px;
   color: var(--color-gray-300);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 
 .hero-actions {
@@ -647,6 +735,11 @@ p {
   }
 }
 
+.video-item {
+  border: 1px solid var(--color-black);
+  padding: var(--space-1);
+}
+
 .video-item iframe {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -655,6 +748,7 @@ p {
 
 .video-item p {
   margin-top: var(--space-1);
+  margin-bottom: 0;
   font-size: 0.9rem;
 }
 

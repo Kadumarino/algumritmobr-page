@@ -30,7 +30,8 @@ repositório e publicado com `git push`. Os pontos principais de edição são:
 | Posts do Instagram exibidos na página Book | [src/data/instagram-posts.json](src/data/instagram-posts.json) |
 | Vídeos do YouTube exibidos na Home | [src/data/videos.json](src/data/videos.json) |
 | Repertório por década | [src/content/repertorio/](src/content/repertorio/) (`parte-1.json`, `parte-2.json`) |
-| Depoimentos (página desativada no momento, sem link no menu) | [src/content/depoimentos/](src/content/depoimentos/) (um arquivo `.json` por depoimento) |
+| Depoimentos | [src/content/depoimentos/](src/content/depoimentos/) (um arquivo `.json` por depoimento) |
+| Agenda de shows (Google Calendar) | [src/data/site.ts](src/data/site.ts) (`googleCalendarId`) |
 | Textos das páginas (Início, Sobre, etc.) | arquivos `.astro` em [src/pages/](src/pages/) |
 | Logotipos (2 versões) | [public/images/logo/](public/images/logo/) |
 
@@ -40,7 +41,7 @@ Procure no código por comentários `TODO` — todos marcam um placeholder a sub
 
 - Vídeos reais do YouTube do projeto (`src/data/videos.json`) — verificar se os 2 links do bloco "Vídeos" na Home estão corretos (o cliente enviou o mesmo link duas vezes)
 - Textos finais (história do projeto, repertório completo)
-- Reativar a página de Depoimentos quando houver depoimentos reais (adicionar de volta o link em `src/components/Header.astro` e `src/components/Footer.astro`)
+- Criar a agenda no Google Calendar e preencher `googleCalendarId` em `src/data/site.ts` (ver instruções no comentário acima do campo) para a página /agenda/ funcionar
 - Usuário/organização do GitHub em `astro.config.mjs` (`SITE_URL`) e em `public/robots.txt`, para as tags de SEO e o sitemap ficarem corretos
 
 ## Domínio próprio (opcional, futuro)

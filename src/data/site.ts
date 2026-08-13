@@ -26,5 +26,14 @@ export const siteConfig = {
 
   spotifyPlaylistId: '27g2DyU29lJQZs9zfHDXpv',
 
+  // TODO: ID do Google Calendar público usado na página /agenda/.
+  // Como obter: crie uma agenda no Google Calendar (ex.: "Agenda Algum Ritmo") →
+  // menu "⋮" da agenda → Configurações e compartilhamento → em "Acesso de compartilhamento"
+  // marque "Disponibilizar publicamente" → role até "Integrar agenda" e copie o "ID da agenda"
+  // (formato algo@group.calendar.google.com). Cole o valor abaixo.
+  // Os eventos criados/editados nessa agenda (pelo Google Calendar, celular ou computador)
+  // aparecem automaticamente no site — não é necessário mexer no código nem publicar de novo.
+  googleCalendarId: 'algumritmobr@gmail.com',
+
   formspreeEndpoint: 'https://formspree.io/f/xvkpankv',
 } as const;

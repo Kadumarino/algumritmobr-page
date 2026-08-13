@@ -7,6 +7,8 @@ const navItems = [
   { href: '', label: 'Início' },
   { href: 'sobre/', label: 'Sobre' },
   { href: 'repertorio/', label: 'Repertório' },
+  { href: 'agenda/', label: 'Agenda' },
+  { href: 'depoimentos/', label: 'Depoimentos' },
   { href: 'book/', label: 'Book' },
   { href: 'contato/', label: 'Contato' },
 ];
@@ -16,10 +18,6 @@ const currentPath = Astro.url.pathname;
 
 <header class="site-header">
   <div class="container">
-    <a href={base} class="logo-link" aria-label="Algum Ritmo — página inicial">
-      <Logo variant="dark" />
-    </a>
-
     <nav class="nav" aria-label="Navegação principal">
       <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
         &#9776;
@@ -40,6 +38,10 @@ const currentPath = Astro.url.pathname;
         }
       </ul>
     </nav>
+
+    <a href={base} class="logo-link" aria-label="Algum Ritmo — página inicial">
+      <Logo variant="dark" />
+    </a>
   </div>
 </header>
 

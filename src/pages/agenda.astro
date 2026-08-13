@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
+const calendarSrc = `https://calendar.google.com/calendar/embed?src=${encodeURIComponent(
+  siteConfig.googleCalendarId
+)}&ctz=America%2FSao_Paulo&mode=MONTH&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0`;
+---
+
+<BaseLayout
+  title="Agenda"
+  description="Confira as datas já reservadas e as datas livres do duo Algum Ritmo."
+>
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Agenda</span>
+        <h1>Datas de shows</h1>
+        <p>
+          {/* TODO: preencher siteConfig.googleCalendarId em src/data/site.ts com o ID do
+          Google Calendar público da agenda. Datas já reservadas aparecem preenchidas no
+          calendário abaixo; datas sem eventos estão livres. Novos shows adicionados na agenda
+          do Google aparecem aqui automaticamente, sem precisar mexer no código do site. */}
+          Confira abaixo as datas já reservadas. Dias sem eventos marcados estão livres para
+          novas contratações.
+        </p>
+      </div>
+
+      <div class="embed-wrap">
+        <iframe
+          src={calendarSrc}
+          style="border: 1px solid var(--color-gray-300);"
+          width="100%"
+          height="600"
+          loading="lazy"
+          title="Agenda de shows — Algum Ritmo"
+        ></iframe>
+      </div>
+
+      <div class="instagram-cta" style="margin-top: var(--space-4);">
+        <h2>Não encontrou a data que precisa?</h2>
+        <p>Fale com a gente e confirmamos a disponibilidade para o seu evento.</p>
+        <a class="btn btn-outline--dark" href={`${base}contato/`}>Solicitar Orçamento</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

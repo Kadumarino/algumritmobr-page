@@ -15,14 +15,13 @@ const heroYoutubeId = 'HUBEsOYtC4w';
         src={`https://www.youtube.com/embed/${heroYoutubeId}?autoplay=1&mute=1&loop=1&playlist=${heroYoutubeId}&controls=1&modestbranding=1&rel=0&enablejsapi=1`}
         title="Vídeo de apresentação — Algum Ritmo"
         allow="autoplay; encrypted-media"
-        loading="lazy"
       ></iframe>
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-content container">
       <span class="eyebrow">Projeto Acústico</span>
       <h1>{siteConfig.nome}</h1>
-      <p class="hero-tagline">Levando a música ao além!</p>
+      <p class="hero-tagline">Levando a música além!</p>
       <p class="hero-description">
         Shows para hotéis, casas noturnas e eventos exclusivos, com repertório dos anos 60 aos
         dias atuais — e a marca registrada do projeto: a troca de papéis ao vivo entre os
@@ -58,10 +57,9 @@ const heroYoutubeId = 'HUBEsOYtC4w';
           </p>
         </div>
         <div class="card">
-          <h3>Eventos Sofisticados</h3>
+          <h3>Tipos de Eventos</h3>
           <p>
-            Anos de mercado em hotéis, casas noturnas e celebrações que exigem elegância e
-            profissionalismo.
+            Anos de mercado em hotéis, casas noturnas e celebrações festivas e muito mais.
           </p>
         </div>
       </div>
@@ -108,6 +106,24 @@ const heroYoutubeId = 'HUBEsOYtC4w';
 
 <script>
   // Garante que, ao dar play em um vídeo do YouTube, os demais vídeos da página pausem automaticamente.
+  let heroPlayer: any = null;
+
+  function unmuteHeroOnFirstInteraction() {
+    if (heroPlayer && typeof heroPlayer.unMute === 'function') {
+      heroPlayer.unMute();
+      heroPlayer.setVolume(100);
+    }
+    window.removeEventListener('click', unmuteHeroOnFirstInteraction);
+    window.removeEventListener('touchstart', unmuteHeroOnFirstInteraction);
+    window.removeEventListener('keydown', unmuteHeroOnFirstInteraction);
+    window.removeEventListener('scroll', unmuteHeroOnFirstInteraction);
+  }
+
+  window.addEventListener('click', unmuteHeroOnFirstInteraction);
+  window.addEventListener('touchstart', unmuteHeroOnFirstInteraction);
+  window.addEventListener('keydown', unmuteHeroOnFirstInteraction);
+  window.addEventListener('scroll', unmuteHeroOnFirstInteraction, { once: true, passive: true });
+
   function initYouTubePlayers() {
     const iframes = document.querySelectorAll<HTMLIFrameElement>('iframe[id^="yt-player-"]');
     if (!iframes.length) return;
@@ -119,10 +135,11 @@ const heroYoutubeId = 'HUBEsOYtC4w';
         events: {
           onReady: (event: any) => {
             if (iframe.id === 'yt-player-hero') {
-              // Autoplay precisa começar mudo (política dos navegadores); tentamos desmutar
-              // em seguida, mas o visitante sempre pode ajustar o som pelos controles do player.
-              event.target.unMute();
-              event.target.setVolume(100);
+              // Navegadores só permitem autoplay com som se o visitante já tiver interagido
+              // com a página. Começamos mudo para garantir o autoplay e ativamos o som
+              // automaticamente assim que houver qualquer clique, toque, tecla ou rolagem.
+              heroPlayer = event.target;
+              event.target.mute();
               event.target.playVideo();
             }
           },

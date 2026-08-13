@@ -4,12 +4,9 @@ interface Props {
   class?: string;
 }
 
-const { variant = 'dark', class: className = '' } = Astro.props;
+const { class: className = '' } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const src =
-  variant === 'dark'
-    ? `${base}images/logo/logo-dark.jpeg`
-    : `${base}images/logo/logo-light.jpeg`;
+const src = `${base}images/logo/logo.png`;
 ---
 
 <img src={src} alt="Algum Ritmo — Projeto Acústico" class={`site-logo ${className}`} />

@@ -1,4 +1,5 @@
 ---
+import Logo from './Logo.astro';
 import { siteConfig } from '../data/site';
 
 const base = import.meta.env.BASE_URL;
@@ -9,31 +10,37 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumero}?text=${encodeURI
 ---
 
 <footer class="site-footer">
-  <div class="container footer-grid">
-    <div>
-      <h3>{siteConfig.nome}</h3>
-      <p>{siteConfig.tagline}</p>
+  <div class="container">
+    <div class="footer-brand-row">
+      <a href={base} class="footer-logo-link" aria-label="Algum Ritmo — página inicial">
+        <Logo class="footer-logo" />
+      </a>
+      <p class="footer-tagline">{siteConfig.tagline}</p>
     </div>
 
-    <div>
-      <h4>Navegação</h4>
-      <ul>
-        <li><a href={base}>Início</a></li>
-        <li><a href={`${base}sobre/`}>Sobre</a></li>
-        <li><a href={`${base}repertorio/`}>Repertório</a></li>
-        <li><a href={`${base}book/`}>Book</a></li>
-        <li><a href={`${base}contato/`}>Contato</a></li>
-      </ul>
-    </div>
+    <div class="footer-columns">
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul class="footer-list">
+          <li><a href={base}>Início</a></li>
+          <li><a href={`${base}sobre/`}>Sobre</a></li>
+          <li><a href={`${base}repertorio/`}>Repertório</a></li>
+          <li><a href={`${base}agenda/`}>Agenda</a></li>
+          <li><a href={`${base}depoimentos/`}>Depoimentos</a></li>
+          <li><a href={`${base}book/`}>Book</a></li>
+          <li><a href={`${base}contato/`}>Contato</a></li>
+        </ul>
+      </div>
 
-    <div>
-      <h4>Contato</h4>
-      <ul>
-        <li><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
-        <li><a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram {siteConfig.instagramHandle}</a></li>
-        <li><a href={siteConfig.youtubeUrl} target="_blank" rel="noopener noreferrer">YouTube</a></li>
-        <li><a href={`mailto:${siteConfig.emailContato}`}>{siteConfig.emailContato}</a></li>
-      </ul>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul class="footer-list">
+          <li><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+          <li><a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href={siteConfig.youtubeUrl} target="_blank" rel="noopener noreferrer">YouTube</a></li>
+          <li><a href={`mailto:${siteConfig.emailContato}`}>E-mail</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 
