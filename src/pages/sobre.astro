@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -8,67 +8,244 @@ const base = import.meta.env.BASE_URL;
   title="Sobre"
   description="Conheça a história do projeto Algum Ritmo e o formato único de troca de papéis ao vivo entre os músicos."
 >
-  <section class="section">
+  <section class="section" id="conteudo-sobre" style="position:relative">
+    <button
+      type="button"
+      id="ouvir-sobre-btn"
+      class="listen-btn-circle"
+      aria-pressed="false"
+      title="Ouvir esta página"
+    >
+      <span aria-hidden="true">🔊</span>
+    </button>
     <div class="container about-grid">
       <div class="about-media">
         <img
-          src={`${base}images/sobre/placeholder-duo.svg`}
-          alt="Foto do projeto Algum Ritmo — placeholder, substituir por foto real"
-          width="1200"
-          height="1400"
+          src={`${base}images/sobre/foto-1.jpeg`}
+          alt="Algum Ritmo em apresentação ao vivo"
+          loading="lazy"
+        />
+        <img
+          src={`${base}images/sobre/foto-2.jpeg`}
+          alt="Algum Ritmo em apresentação ao vivo"
+          loading="lazy"
+        />
+        <img
+          src={`${base}images/sobre/foto-3.jpeg`}
+          alt="Algum Ritmo em apresentação ao vivo"
           loading="lazy"
         />
       </div>
       <div>
         <span class="eyebrow">Nossa História</span>
         <h1>Anos de estrada, uma só paixão</h1>
+        <h3>Música que conecta gerações</h3>
         <p>
-          {/* TODO: substituir pelo texto final com a história real do projeto (ano de início, trajetória, principais eventos e hotéis já atendidos). */}
-          O Algum Ritmo é um projeto acústico com anos de mercado, especializado em levar
-          sofisticação e emoção para hotéis, casas noturnas e eventos exclusivos. Ao longo da
-          trajetória, o projeto construiu um repertório que atravessa décadas e um formato de show
-          que já é a sua marca registrada.
+          {
+            /* TODO: substituir pelo texto final com a história real do projeto (ano de início, trajetória, principais eventos e hotéis já atendidos). */
+          }
+          Com um repertório que atravessa décadas e estilos, o Algum Ritmo é um projeto
+          musical acústico que transforma apresentações ao vivo em experiências marcantes.
+          Há mais de 5 anos na estrada, a dupla vem conquistando públicos diversos
+          através de performances envolventes, um formato diferenciado e uma seleção
+          musical cuidadosamente construída para agradar diferentes gerações. O projeto
+          passeia com naturalidade pelos grandes clássicos do Classic Rock, Pop Rock,
+          MPB, Pop Nacional e Internacional, reunindo sucessos que marcaram época
+          desde os anos 60 até os dias atuais. Essa versatilidade permite que cada
+          apresentação seja personalizada para o perfil do público e a proposta do
+          evento, criando a atmosfera ideal para cada ocasião.
         </p>
+
+        <h3>Um formato único e interativo</h3>
         <p>
-          Mais do que música, o Algum Ritmo entrega uma experiência: presença de palco, repertório
-          certeiro para cada tipo de público e um cuidado especial com o clima de cada evento —
-          seja um casamento em um hotel cinco estrelas, seja uma noite descontraída em uma casa
-          noturna.
+          Um dos grandes diferenciais do Algum Ritmo é a dinâmica da
+          apresentação. Durante o show, os músicos realizam uma troca completa
+          de papéis, proporcionando variedade sonora e visual ao espetáculo. Na
+          primeira parte da apresentação, um integrante assume o violão, vocal
+          principal e primeira voz, enquanto o parceiro conduz a percussão no
+          cajon e realiza os backing vocals e segunda voz. Na sequência, os
+          papéis são invertidos integralmente: quem estava na percussão assume o
+          violão e o vocal principal, enquanto o outro músico passa para o cajon
+          e segunda voz. Essa alternância traz novas interpretações, diferentes
+          timbres vocais e uma energia renovada ao longo da apresentação,
+          mantendo o público engajado do início ao fim.
         </p>
+
+        <h3>Repertório para todas as gerações</h3>
+        <p>
+          O Algum Ritmo construiu, ao longo dos anos, um repertório abrangente
+          que permite criar desde ambientes sofisticados até momentos de grande
+          interação com o público. O setlist inclui artistas e bandas que
+          marcaram diferentes épocas da música nacional e internacional,
+          transitando por:
+        </p>
+
+        <ul>
+          <li>*Classic Rock</li>
+          <li>*Pop Rock</li>
+          <li>*MPB</li>
+          <li>*Pop Nacional</li>
+          <li>*Pop Internacional</li>
+          <li>*Flashbacks dos anos 60, 70, 80, 90 e 2000</li>
+          <li>*Sucessos contemporâneos</li>
+        </ul>
+        <p></p>
+        <p>
+          Tudo é executado em formato acústico, trazendo uma sonoridade
+          agradável, elegante e ideal para ambientes que valorizam música ao
+          vivo de qualidade.
+        </p>
+
+          <h3>Uma experiência que vai além da música</h3>
+          <p>
+            Cada apresentação é planejada para criar conexão genuína com o
+            público. A combinação entre repertório versátil, qualidade musical,
+            presença de palco e interação transforma cada show em uma
+            experiência memorável. Seja em um ambiente intimista, em um hotel
+            cinco estrelas, em uma casa noturna ou em um grande evento, o Algum
+            Ritmo entrega profissionalismo, energia e emoção na medida certa.
+          </p>
+        <p></p>
+        <h3>Vamos tocar no seu estabelecimento?</h3>
+        <p>
+          Gostaríamos de conversar sobre a possibilidade de levar o Algum Ritmo
+          para a programação do seu estabelecimento. Caso haja interesse em
+          conhecer mais sobre nosso trabalho, apresentações anteriores e
+          conteúdo audiovisual, convidamos você a acompanhar nosso perfil no
+          Instagram @algumritmobr. Ficamos à disposição para esclarecer
+          quaisquer dúvidas e conversar sobre formatos de apresentação, duração
+          de show e condições comerciais. Será um prazer fazer parte da sua
+          programação e proporcionar uma experiência musical diferenciada ao seu
+          público. 😃
+          </p>
+
+        <p>
+          Algum Ritmo — Clássicos de todas as épocas, interpretados com personalidade, emoção e autenticidade.
+        </p>
+
+        <span class="sr-only" id="sobre-tts-extra">Algum Ritmo — Clássicos de todas as épocas, interpretados com personalidade, emoção e autenticidade.</span>
+
       </div>
     </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-title">
-        <span class="eyebrow">Formato Exclusivo</span>
-        <h2>A troca de papéis ao vivo</h2>
-        <p>
-          O grande diferencial do show é a inversão de papéis entre os músicos, criando duas
-          atmosferas distintas em uma única apresentação.
-        </p>
-      </div>
-
-      <div class="roles-grid">
-        <div class="role-card">
-          <span class="role-number">01</span>
-          <h3>Primeira Parte</h3>
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">Formato Exclusivo</span>
+          <h2>A troca de papéis ao vivo</h2>
           <p>
-            Um músico assume o violão, o vocal principal e a primeira voz, enquanto o parceiro
-            toca cajon e faz a segunda voz. Repertório dos anos 80, 90 e sucessos atuais.
+            O grande diferencial do show é a inversão de papéis entre os
+            músicos, criando duas atmosferas distintas em uma única
+            apresentação.
           </p>
         </div>
-        <div class="role-card">
-          <span class="role-number">02</span>
-          <h3>Segunda Parte</h3>
-          <p>
-            Os papéis se invertem: o outro músico assume o violão, o vocal principal e a
-            primeira voz, enquanto o primeiro passa para o cajon e a segunda voz. Repertório dos
-            anos 60, 70 e 80.
-          </p>
+
+        <div class="roles-grid">
+          <div class="role-card">
+            <span class="role-number">01</span>
+            <h3>Primeira Parte</h3>
+            <p>
+              Um músico assume o violão, o vocal principal e a primeira voz,
+              enquanto o parceiro toca cajon e faz a segunda voz. Repertório dos
+              anos 80, 90 e sucessos atuais.
+            </p>
+          </div>
+          <div class="role-card">
+            <span class="role-number">02</span>
+            <h3>Segunda Parte</h3>
+            <p>
+              Os papéis se invertem: o outro músico assume o violão, o vocal
+              principal e a primeira voz, enquanto o primeiro passa para o cajon
+              e a segunda voz. Repertório dos anos 60, 70 e 80.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </section>
 </BaseLayout>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('#ouvir-sobre-btn');
+  const content = document.querySelector<HTMLElement>('#conteudo-sobre');
+
+  if (btn && content) {
+    if (!('speechSynthesis' in window)) {
+      btn.disabled = true;
+      const label = btn.querySelector('.listen-btn__label');
+      if (label) label.textContent = 'Voz indisponível';
+    } else {
+      const icon = btn.querySelector<HTMLSpanElement>('.listen-btn__icon');
+      const label = btn.querySelector<HTMLSpanElement>('.listen-btn__label');
+
+      const getFemaleVoice = (): SpeechSynthesisVoice | null => {
+        const voices = window.speechSynthesis.getVoices();
+        const pt = voices.filter(v => v.lang.toLowerCase().startsWith('pt'));
+
+        // Prioridade 1 — vozes neurais do Google (mais humanizadas)
+        const googleNeural = pt.find(v => /google/i.test(v.name));
+        if (googleNeural) return googleNeural;
+
+        // Prioridade 2 — nomes femininos conhecidos por SO
+        const femaleNames = ['luciana', 'maria', 'francisca', 'fernanda', 'vitoria', 'female'];
+        const namedFemale = pt.find(v => femaleNames.some(n => v.name.toLowerCase().includes(n)));
+        if (namedFemale) return namedFemale;
+
+        // Prioridade 3 — qualquer voz pt disponível
+        return pt[0] ?? null;
+      };
+
+      const getReadableText = () => {
+        const nodes = content.querySelectorAll('h1, h2, h3, p, li');
+        const body = Array.from(nodes)
+          .map((node) => node.textContent?.replace(/\s+/g, ' ').trim())
+          .filter((text): text is string => Boolean(text))
+          .join('. ');
+        return 'Projeto Algum Ritmo. ' + body;
+      };
+
+      const setPlayingState = (isPlaying: boolean) => {
+        btn.setAttribute('aria-pressed', String(isPlaying));
+        btn.querySelector('span')!.textContent = isPlaying ? '⏹️' : '🔊';
+      };
+
+      const speak = () => {
+        const text = getReadableText();
+        if (!text) return;
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 0.95;
+
+        const voice = getFemaleVoice();
+        if (voice) utterance.voice = voice;
+
+        utterance.addEventListener('end', () => setPlayingState(false));
+        utterance.addEventListener('error', () => setPlayingState(false));
+
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+        setPlayingState(true);
+      };
+
+      btn.addEventListener('click', () => {
+        if (window.speechSynthesis.speaking) {
+          window.speechSynthesis.cancel();
+          setPlayingState(false);
+          return;
+        }
+
+        // Vozes podem ainda não estar carregadas na primeira chamada
+        if (window.speechSynthesis.getVoices().length === 0) {
+          window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.onvoiceschanged = null;
+            speak();
+          };
+        } else {
+          speak();
+        }
+      });
+
+      window.addEventListener('beforeunload', () => window.speechSynthesis.cancel());
+    }
+  }
+</script>
