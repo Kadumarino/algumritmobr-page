@@ -13,6 +13,7 @@ const repertorio = defineCollection({
           z.object({
             titulo: z.string(),
             artista: z.string(),
+            spotifyId: z.string().optional(),
           })
         ),
       })

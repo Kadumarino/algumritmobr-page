@@ -6,26 +6,48 @@
     {
       "decada": "Anos 60",
       "musicas": [
-        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+        { "titulo": "A Hard Day's Night", "artista": "The Beatles", "spotifyId": "5J2CHimS7dWYMImCHkEFaJ" },
+        { "titulo": "Can't Buy Me Love", "artista": "The Beatles", "spotifyId": "38Vb1J5W5LOs0i7SAF76pa" },
+        { "titulo": "Yesterday", "artista": "The Beatles", "spotifyId": "3BQHpFgAp4l80e1XslIjNI" },
+        { "titulo": "Eleanor Rigby", "artista": "The Beatles", "spotifyId": "5GjPQ0eI7AgmOnADn1EO6Q" },
+        { "titulo": "I Want to Hold Your Hand", "artista": "The Beatles", "spotifyId": "4pbG9SUmWIvsROVLF0zF9s" },
+        { "titulo": "Can't Help Falling in Love", "artista": "Elvis Presley", "spotifyId": "44AyOl4qVkzS48vBsbNXaC" },
+        { "titulo": "Suspicious Minds", "artista": "Elvis Presley", "spotifyId": "1H5IfYyIIAlgDX8zguUzns" },
+        { "titulo": "Proud Mary", "artista": "Creedence Clearwater Revival", "spotifyId": "6pxWv6GV35VGmcPf5dh6CH" },
+        { "titulo": "House of the Rising Sun", "artista": "The Animals", "spotifyId": "4mn2kNTqiGLwaUR8JdhJ1l" },
+        { "titulo": "San Francisco (Be Sure to Wear Flowers in Your Hair)", "artista": "Scott McKenzie", "spotifyId": "6vcNJUWtUPB0hKC6VbZriY" }
       ]
     },
     {
       "decada": "Anos 70",
       "musicas": [
-        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+        { "titulo": "Imagine", "artista": "John Lennon", "spotifyId": "7pKfPomDEeI4TPT6EOYjn9" },
+        { "titulo": "Stairway to Heaven", "artista": "Led Zeppelin", "spotifyId": "5CQ30WqJwcep0pYcV4AMNc" },
+        { "titulo": "Comfortably Numb", "artista": "Pink Floyd", "spotifyId": "5HNCy40Ni5BZJFw1TKzRsC" },
+        { "titulo": "Wish You Were Here", "artista": "Pink Floyd", "spotifyId": "6mFkJmJqdDVQ1REhVfGgd1" },
+        { "titulo": "Free Bird", "artista": "Lynyrd Skynyrd", "spotifyId": "5EWPGh7jbTNO2wakv8LjUI" },
+        { "titulo": "Sweet Home Alabama", "artista": "Lynyrd Skynyrd", "spotifyId": "7e89621JPkKaeDSTQ3avtg" },
+        { "titulo": "Three Little Birds", "artista": "Bob Marley & The Wailers", "spotifyId": "6A9mKXlFRPMPem6ygQSt7z" },
+        { "titulo": "Metamorfose Ambulante", "artista": "Raul Seixas", "spotifyId": "2Yk0HvfTaijA47aM0Fj88u" },
+        { "titulo": "Angie", "artista": "The Rolling Stones", "spotifyId": "1GcVa4jFySlun4jLSuMhiq" },
+        { "titulo": "Não Quero Dinheiro (Só Quero Amar)", "artista": "Tim Maia", "spotifyId": "0SfcG65T1KKCj5NQffpzQR" }
       ]
     },
     {
       "decada": "Anos 80",
       "musicas": [
-        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+        { "titulo": "Tempo Perdido", "artista": "Legião Urbana", "spotifyId": "7MnT7msJZg3XBAS0OTfGrB" },
+        { "titulo": "Será", "artista": "Legião Urbana", "spotifyId": "7hkQhMFq4EOTYwX3I7cgmA" },
+        { "titulo": "Índios", "artista": "Legião Urbana", "spotifyId": "4RLp0EpcPdMHHoHmYIMWGH" },
+        { "titulo": "Que País É Este", "artista": "Legião Urbana", "spotifyId": "1bqRtNOcT1QiV1j87IoATA" },
+        { "titulo": "Lanterna dos Afogados", "artista": "Os Paralamas do Sucesso", "spotifyId": "3uezVXXzZZUCjqPRC9JA6u" },
+        { "titulo": "Sonífera Ilha", "artista": "Titãs", "spotifyId": "1mK7rqBmWWFvU1huYnsPGq" },
+        { "titulo": "Um Certo Alguém", "artista": "Lulu Santos", "spotifyId": "2wL17lKcJQdXAwKZ8jlXCL" },
+        { "titulo": "Another Day in Paradise", "artista": "Phil Collins", "spotifyId": "1NCuYqMc8hKMb4cpNTcJbD" },
+        { "titulo": "Redemption Song", "artista": "Bob Marley & The Wailers", "spotifyId": "26PwuMotZqcczKLHi4Htz3" },
+        { "titulo": "Under Pressure", "artista": "Queen, David Bowie", "spotifyId": "2nrG5UtAcqXbYttu7MXP1p" }
       ]
     }
   ]
 }
+

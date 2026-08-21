@@ -747,7 +747,15 @@ p {
   }
 }
 
+.decada-card {
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+  min-width: 0;
+}
+
 .decada-card h4 {
+  flex-shrink: 0;
   font-family: var(--font-serif);
   color: var(--color-navy);
   border-bottom: 2px solid var(--color-gold);
@@ -755,15 +763,91 @@ p {
   margin-bottom: var(--space-2);
 }
 
+.decada-card ul {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+
 .decada-card li {
   padding: 0.3rem 0;
   border-bottom: 1px dashed var(--color-gray-300);
+}
+
+.musica-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.musica-row.is-playable {
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.musica-row.is-playable:hover {
+  background-color: var(--color-off-white);
+}
+
+.musica-row.is-playable .musica-info {
+  cursor: pointer;
+}
+
+.musica-info {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.musica-info .titulo,
+.musica-info .artista {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .decada-card .artista {
   display: block;
   font-size: 0.85rem;
   color: var(--color-gray-600);
+}
+
+.play-btn {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.play-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--color-navy);
+}
+
+.play-btn:hover,
+.play-btn.is-active {
+  background: var(--color-gold);
+}
+
+.spotify-player {
+  margin: 0.4rem 0 0.2rem;
+}
+
+.spotify-player iframe {
+  display: block;
+  border-radius: 6px;
 }
 
 .embed-wrap {

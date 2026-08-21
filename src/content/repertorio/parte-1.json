@@ -6,26 +6,48 @@
     {
       "decada": "Anos 80",
       "musicas": [
-        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+        { "titulo": "Faroeste Caboclo", "artista": "Legião Urbana", "spotifyId": "6ttKOudrrD5yjt4saUjhNa" },
+        { "titulo": "Eduardo e Mônica", "artista": "Legião Urbana", "spotifyId": "6Pa6VpdGS8OfiVOEnNAHHw" },
+        { "titulo": "Ainda É Cedo", "artista": "Legião Urbana", "spotifyId": "7uscfoAoI65JcSY4NyHg1t" },
+        { "titulo": "Take on Me", "artista": "a-ha", "spotifyId": "2WfaOiMkCvy7F5fcp2zZ8L" },
+        { "titulo": "Radio Ga Ga", "artista": "Queen", "spotifyId": "6N717o83wbmahFGUqkjQj7" },
+        { "titulo": "Every Breath You Take", "artista": "The Police", "spotifyId": "1JSTJqkT5qHq8MDJnJbRE1" },
+        { "titulo": "Summer of '69", "artista": "Bryan Adams", "spotifyId": "0GONea6G2XdnHWjNZd6zt3" },
+        { "titulo": "I Still Haven't Found What I'm Looking For", "artista": "U2", "spotifyId": "6wpGqhRvJGNNXwWlPmkMyO" },
+        { "titulo": "Faz Parte do Meu Show", "artista": "Cazuza", "spotifyId": "6qCjZi4wOpRZty2wZtyeO0" },
+        { "titulo": "Wicked Game", "artista": "Chris Isaak", "spotifyId": "7w5AOd6HrDIHewHfpABEss" }
       ]
     },
     {
       "decada": "Anos 90",
       "musicas": [
-        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+        { "titulo": "Smells Like Teen Spirit", "artista": "Nirvana", "spotifyId": "4CeeEOM32jQcH3eN9Q2dGj" },
+        { "titulo": "Zombie", "artista": "The Cranberries", "spotifyId": "49wOjOkS4pBK3PQnPnNYjb" },
+        { "titulo": "Wonderwall", "artista": "Oasis", "spotifyId": "4yBiZFLXn0n9AUJ5sWO88k" },
+        { "titulo": "Californication", "artista": "Red Hot Chili Peppers", "spotifyId": "48UPSzbZjgc449aqz8bxox" },
+        { "titulo": "Wind of Change", "artista": "Scorpions", "spotifyId": "3ovjw5HZZv43SxTwApooCM" },
+        { "titulo": "Malandragem", "artista": "Cássia Eller", "spotifyId": "2Ktn7Hg3jocizpfzYJKLty" },
+        { "titulo": "A Estrada", "artista": "Cidade Negra", "spotifyId": "3bS1srVDOOqGYCKcnzYwfs" },
+        { "titulo": "Fácil", "artista": "Jota Quest", "spotifyId": "5rhijzoJmc7ZdnEgBS58Wh" },
+        { "titulo": "Chopis Centis", "artista": "Mamonas Assassinas", "spotifyId": "1A4WM88OM1UWszmxege3ye" },
+        { "titulo": "Vento no Litoral", "artista": "Legião Urbana", "spotifyId": "1nS8PR4EyWI6rLiCfAGlT6" }
       ]
     },
     {
       "decada": "Atualidades",
       "musicas": [
-        { "titulo": "Título de exemplo 1", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 2", "artista": "Artista de exemplo" },
-        { "titulo": "Título de exemplo 3", "artista": "Artista de exemplo" }
+        { "titulo": "Trem-Bala", "artista": "Ana Vilela", "spotifyId": "05QeyKGAn4TZrv41tMiD1A" },
+        { "titulo": "Blinding Lights", "artista": "The Weeknd", "spotifyId": "0VjIjW4GlUZAMYd2vXMi3b" },
+        { "titulo": "Rolling in the Deep", "artista": "Adele", "spotifyId": "1c8gk2PeTE04A1pIDH9YMk" },
+        { "titulo": "Thinking Out Loud", "artista": "Ed Sheeran", "spotifyId": "34gCuhDGsG4bRPIf9bb02f" },
+        { "titulo": "Get Lucky", "artista": "Daft Punk, Pharrell Williams, Nile Rodgers", "spotifyId": "69kOkLUCkxIZYexIgSG8rq" },
+        { "titulo": "Happy", "artista": "Pharrell Williams", "spotifyId": "60nZcImufyMA1MKQY3dcCH" },
+        { "titulo": "Wake Me Up", "artista": "Avicii", "spotifyId": "0nrRP2bk19rLc0orkWPQk2" },
+        { "titulo": "N", "artista": "Nando Reis, ANAVITÓRIA", "spotifyId": "7iNcOVH9n4EEY2rwWAQOsA" },
+        { "titulo": "Pupila", "artista": "ANAVITÓRIA, Vitor Kley", "spotifyId": "7Gk5OrMYaMRtT2JmgJVAfk" },
+        { "titulo": "Leave the Door Open", "artista": "Bruno Mars, Anderson .Paak, Silk Sonic", "spotifyId": "4pryE6cN2gFL1FVF5fYINl" }
       ]
     }
   ]
 }
+
