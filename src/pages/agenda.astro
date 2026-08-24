@@ -27,22 +27,32 @@ const calendarSrc = `https://calendar.google.com/calendar/embed?src=${encodeURIC
         </p>
       </div>
 
-      <div class="embed-wrap">
-        <iframe
-          src={calendarSrc}
-          style="border: 1px solid var(--color-gray-300);"
-          width="100%"
-          height="600"
-          loading="lazy"
-          title="Agenda de shows — Algum Ritmo"
-        ></iframe>
+      <div class="agenda-frame">
+        <div class="agenda-frame-header">
+          <span class="agenda-badge">♪ Direto do calendário, sempre atualizado</span>
+          <div class="agenda-legend">
+            <span><i class="dot dot--reservado"></i> Reservado</span>
+            <span><i class="dot dot--livre"></i> Livre</span>
+          </div>
+        </div>
+        <div class="embed-wrap agenda-embed">
+          <iframe
+            src={calendarSrc}
+            width="100%"
+            height="600"
+            loading="lazy"
+            title="Agenda de shows — Algum Ritmo"
+          ></iframe>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="instagram-cta" style="margin-top: var(--space-4);">
-        <h2>Não encontrou a data que precisa?</h2>
-        <p>Fale com a gente e confirmamos a disponibilidade para o seu evento.</p>
-        <a class="btn btn-outline--dark" href={`${base}contato/`}>Solicitar Orçamento</a>
-      </div>
+  <section class="section section--navy">
+    <div class="container" style="text-align:center;">
+      <h2>Não encontrou a data que precisa?</h2>
+      <p>Fale com a gente e confirmamos a disponibilidade para o seu evento.</p>
+      <a class="btn btn-primary" href={`${base}contato/`}>Solicitar Orçamento</a>
     </div>
   </section>
 </BaseLayout>

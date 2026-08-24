@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Deixe seu depoimento"
+  description="Conte como foi sua experiência com o duo Algum Ritmo. Seu depoimento passa por uma revisão antes de aparecer no site."
+>
+  <section class="section">
+    <div class="container" style="max-width: 640px;">
+      <div class="section-title" style="text-align:left;">
+        <span class="eyebrow">Depoimentos</span>
+        <h1>Conte sua experiência</h1>
+        <p>
+          Seu depoimento passa por uma breve revisão antes de aparecer na página de
+          <a href={`${base}depoimentos/`}>Depoimentos</a>. Preencha os campos abaixo.
+        </p>
+      </div>
+
+      <form id="form-depoimento" novalidate>
+        <div class="form-field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" maxlength="80" required />
+        </div>
+
+        <div class="form-field">
+          <label for="instagram">@ do Instagram</label>
+          <input
+            type="text"
+            id="instagram"
+            name="instagram"
+            placeholder="seu.usuario"
+            pattern="@?[A-Za-z0-9._]{1,30}"
+            required
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="texto">Depoimento (até 300 caracteres)</label>
+          <textarea id="texto" name="texto" rows="5" maxlength="300" required></textarea>
+          <span class="char-counter"><span id="texto-count">0</span>/300</span>
+        </div>
+
+        {/* Campo-armadilha invisível para bots — humanos não preenchem isso. */}
+        <div class="sr-only">
+          <label for="site">Deixe em branco</label>
+          <input type="text" id="site" name="site" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <p id="form-msg" class="form-msg" role="status"></p>
+
+        <button class="btn btn-primary" type="submit" id="form-submit">Enviar depoimento</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { supabase, supabaseEnabled } from '../../lib/supabase';
+
+  const form = document.getElementById('form-depoimento') as HTMLFormElement | null;
+  const textoInput = document.getElementById('texto') as HTMLTextAreaElement | null;
+  const textoCount = document.getElementById('texto-count');
+  const msg = document.getElementById('form-msg');
+  const submitBtn = document.getElementById('form-submit') as HTMLButtonElement | null;
+
+  textoInput?.addEventListener('input', () => {
+    if (textoCount) textoCount.textContent = String(textoInput.value.length);
+  });
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!msg || !submitBtn) return;
+
+    const data = new FormData(form);
+    const honeypot = String(data.get('site') || '').trim();
+    if (honeypot) {
+      // Bot preencheu o campo invisível: finge sucesso e não envia nada.
+      form.reset();
+      msg.textContent = 'Depoimento enviado! Obrigado.';
+      return;
+    }
+
+    const nome = String(data.get('nome') || '').trim();
+    const instagram = String(data.get('instagram') || '').trim().replace(/^@/, '');
+    const texto = String(data.get('texto') || '').trim();
+
+    if (!nome || !instagram || !texto) {
+      msg.textContent = 'Preencha todos os campos.';
+      return;
+    }
+
+    if (!supabaseEnabled || !supabase) {
+      msg.textContent =
+        'Envio indisponível no momento. Tente novamente mais tarde ou fale pelo WhatsApp.';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    msg.textContent = 'Enviando...';
+
+    const { error } = await supabase
+      .from('depoimentos_publicos')
+      .insert({ nome, instagram, texto, status: 'pending' });
+
+    if (error) {
+      msg.textContent = 'Não foi possível enviar. Verifique os campos e tente novamente.';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    form.reset();
+    if (textoCount) textoCount.textContent = '0';
+    msg.textContent = 'Depoimento enviado! Após a revisão, ele aparece na página de Depoimentos.';
+    submitBtn.disabled = false;
+  });
+</script>

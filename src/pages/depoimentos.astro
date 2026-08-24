@@ -32,6 +32,57 @@ const base = import.meta.env.BASE_URL;
           ))
         }
       </div>
+
+      <div id="community-depoimentos" class="grid grid--3" style="margin-top: var(--space-3);"></div>
+
+      <div class="depoimentos-cta">
+        <a class="btn btn-outline--dark" href={`${base}depoimentos/enviar/`}>
+          Deixar meu depoimento
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Comentários</span>
+        <h2>O que dizem no Instagram</h2>
+        <p>Deixe seu @ e um comentário — depois de uma breve revisão, ele aparece aqui.</p>
+      </div>
+
+      <form id="form-comentario" class="comentario-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="c-instagram">@ do Instagram</label>
+            <input
+              type="text"
+              id="c-instagram"
+              name="instagram"
+              placeholder="seu.usuario"
+              pattern="@?[A-Za-z0-9._]{1,30}"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="c-texto">Comentário</label>
+            <input type="text" id="c-texto" name="texto" maxlength="500" required />
+          </div>
+        </div>
+
+        <div class="sr-only">
+          <label for="c-site">Deixe em branco</label>
+          <input type="text" id="c-site" name="site" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <p id="comentario-msg" class="form-msg" role="status" />
+
+        <button class="btn btn-outline--dark" type="submit" id="comentario-submit">
+          Comentar
+        </button>
+      </form>
+
+      <div id="comentarios-lista" class="comentarios-lista"></div>
     </div>
   </section>
 
@@ -43,3 +94,204 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  import {
+    supabase,
+    supabaseEnabled,
+    corAvatar,
+    inicialAvatar,
+    type DepoimentoPublico,
+    type Comentario,
+  } from '../lib/supabase';
+
+  const LIKED_KEY = 'algumritmo-comentarios-curtidos';
+
+  function lidosDoLocalStorage(): string[] {
+    try {
+      const raw = localStorage.getItem(LIKED_KEY);
+      return raw ? (JSON.parse(raw) as string[]) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function salvarCurtido(id: string, curtido: boolean) {
+    const atuais = new Set(lidosDoLocalStorage());
+    if (curtido) atuais.add(id);
+    else atuais.delete(id);
+    localStorage.setItem(LIKED_KEY, JSON.stringify([...atuais]));
+  }
+
+  function criarAvatar(instagram: string): HTMLElement {
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar-gerado';
+    avatar.style.backgroundColor = corAvatar(instagram);
+    avatar.textContent = inicialAvatar(instagram);
+    return avatar;
+  }
+
+  function linkInstagram(instagram: string): HTMLAnchorElement {
+    const link = document.createElement('a');
+    link.className = 'instagram-handle';
+    link.href = `https://instagram.com/${encodeURIComponent(instagram)}`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = `@${instagram}`;
+    return link;
+  }
+
+  async function carregarDepoimentosComunidade() {
+    const container = document.getElementById('community-depoimentos');
+    if (!container || !supabaseEnabled || !supabase) return;
+
+    const { data, error } = await supabase
+      .from('depoimentos_publicos')
+      .select('id, nome, instagram, texto, created_at')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false });
+
+    if (error || !data) return;
+
+    for (const item of data as DepoimentoPublico[]) {
+      const card = document.createElement('div');
+      card.className = 'testimonial-card testimonial-card--community';
+
+      const header = document.createElement('div');
+      header.className = 'community-header';
+      header.append(criarAvatar(item.instagram), linkInstagram(item.instagram));
+
+      const quote = document.createElement('span');
+      quote.className = 'quote-mark';
+      quote.textContent = '\u201c';
+
+      const texto = document.createElement('p');
+      texto.textContent = item.texto;
+
+      const autor = document.createElement('p');
+      autor.className = 'autor';
+      autor.textContent = item.nome;
+
+      card.append(header, quote, texto, autor);
+      container.appendChild(card);
+    }
+  }
+
+  async function alternarLike(id: string, botao: HTMLButtonElement, contador: HTMLElement) {
+    if (!supabase) return;
+    const jaCurtiu = botao.getAttribute('aria-pressed') === 'true';
+    botao.disabled = true;
+
+    const { data, error } = jaCurtiu
+      ? await supabase.rpc('decrementar_like', { p_comentario_id: id })
+      : await supabase.rpc('incrementar_like', { p_comentario_id: id });
+
+    if (!error && typeof data === 'number') {
+      contador.textContent = String(data);
+      botao.setAttribute('aria-pressed', String(!jaCurtiu));
+      botao.classList.toggle('is-liked', !jaCurtiu);
+      salvarCurtido(id, !jaCurtiu);
+    }
+    botao.disabled = false;
+  }
+
+  async function carregarComentarios() {
+    const container = document.getElementById('comentarios-lista');
+    if (!container || !supabaseEnabled || !supabase) return;
+
+    const { data, error } = await supabase
+      .from('comentarios')
+      .select('id, instagram, texto, likes_count, created_at')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false });
+
+    if (error || !data) return;
+
+    const curtidos = new Set(lidosDoLocalStorage());
+
+    for (const item of data as Comentario[]) {
+      const linha = document.createElement('div');
+      linha.className = 'comentario-item';
+
+      const corpo = document.createElement('div');
+      corpo.className = 'comentario-body';
+      const texto = document.createElement('p');
+      texto.className = 'comentario-texto';
+      texto.textContent = item.texto;
+      corpo.append(linkInstagram(item.instagram), texto);
+
+      const likeWrap = document.createElement('div');
+      likeWrap.className = 'comentario-like';
+      const botao = document.createElement('button');
+      botao.type = 'button';
+      botao.className = 'like-btn';
+      botao.setAttribute('aria-label', 'Amei');
+      botao.innerHTML =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2 5 5.4 5c2 0 3.4 1 4.6 2.7C11.2 6 12.6 5 14.6 5 18 5 19.6 8.4 22 11.7 19.5 16.4 12 21 12 21z"/></svg>';
+      const contador = document.createElement('span');
+      contador.className = 'like-count';
+      contador.textContent = String(item.likes_count);
+
+      const jaCurtiu = curtidos.has(item.id);
+      botao.setAttribute('aria-pressed', String(jaCurtiu));
+      botao.classList.toggle('is-liked', jaCurtiu);
+      botao.addEventListener('click', () => alternarLike(item.id, botao, contador));
+
+      likeWrap.append(botao, contador);
+      linha.append(criarAvatar(item.instagram), corpo, likeWrap);
+      container.appendChild(linha);
+    }
+  }
+
+  function configurarFormularioComentario() {
+    const form = document.getElementById('form-comentario') as HTMLFormElement | null;
+    const msg = document.getElementById('comentario-msg');
+    const btn = document.getElementById('comentario-submit') as HTMLButtonElement | null;
+    if (!form || !msg || !btn) return;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const dados = new FormData(form);
+      const honeypot = String(dados.get('site') || '').trim();
+      if (honeypot) {
+        form.reset();
+        msg.textContent = 'Comentário enviado!';
+        return;
+      }
+
+      const instagram = String(dados.get('instagram') || '').trim().replace(/^@/, '');
+      const texto = String(dados.get('texto') || '').trim();
+
+      if (!instagram || !texto) {
+        msg.textContent = 'Preencha o @ e o comentário.';
+        return;
+      }
+
+      if (!supabaseEnabled || !supabase) {
+        msg.textContent = 'Envio indisponível no momento.';
+        return;
+      }
+
+      btn.disabled = true;
+      msg.textContent = 'Enviando...';
+
+      const { error } = await supabase
+        .from('comentarios')
+        .insert({ instagram, texto, status: 'pending', likes_count: 0 });
+
+      btn.disabled = false;
+      if (error) {
+        msg.textContent = 'Não foi possível enviar. Tente novamente.';
+        return;
+      }
+
+      form.reset();
+      msg.textContent = 'Comentário enviado! Após a revisão, ele aparece na lista abaixo.';
+    });
+  }
+
+  carregarDepoimentosComunidade();
+  carregarComentarios();
+  configurarFormularioComentario();
+</script>
+
