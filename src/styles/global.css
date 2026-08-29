@@ -961,7 +961,7 @@ p {
 .book-card {
   position: relative;
   display: flex;
-  aspect-ratio: 4 / 5;
+  flex-direction: column;
   border: 2px solid var(--color-gray-300);
   border-radius: 12px;
   overflow: hidden;
@@ -970,16 +970,26 @@ p {
   margin: 0;
   font: inherit;
   text-align: left;
-  cursor: pointer;
   box-shadow: 0 4px 14px rgba(10, 10, 10, 0.08);
   transition: box-shadow var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
 }
 
 .book-card:hover,
-.book-card:focus-visible {
+.book-card:focus-within {
   box-shadow: var(--shadow-elegant);
   transform: translateY(-4px);
   border-color: var(--color-gold);
+  outline: none;
+}
+
+.book-card-media {
+  position: relative;
+  display: flex;
+  aspect-ratio: 4 / 5;
+  cursor: pointer;
+}
+
+.book-card-media:focus-visible {
   outline: none;
 }
 
@@ -1025,6 +1035,41 @@ p {
   color: var(--color-white);
   font-size: 0.85rem;
   font-weight: 600;
+}
+
+.book-card-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-top: 1px solid var(--color-gray-300);
+}
+
+.book-action {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+.book-action svg {
+  width: 18px;
+  height: 18px;
+}
+
+.book-action--link {
+  margin-left: auto;
+  color: var(--color-gray-300);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-base);
+}
+
+.book-action--link:hover,
+.book-action--link:focus-visible {
+  color: var(--color-gold);
 }
 
 .video-grid {

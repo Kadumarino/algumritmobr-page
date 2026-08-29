@@ -46,7 +46,7 @@ function mapearTipo(mediaType) {
 async function buscarPostsDoInstagram() {
   // "me" funciona porque o token já é da própria conta do Instagram — não
   // precisa de um ID de conta separado nem de Página do Facebook vinculada.
-  const campos = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp';
+  const campos = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count';
   const url =
     `https://graph.instagram.com/${GRAPH_API_VERSION}/me/media` +
     `?fields=${campos}&limit=${LIMIT}&access_token=${IG_ACCESS_TOKEN}`;
@@ -92,6 +92,8 @@ async function main() {
       thumbnail_url: post.thumbnail_url || post.media_url,
       video_url: mapearTipo(post.media_type) === 'video' ? post.media_url : null,
       titulo: post.caption ? post.caption.slice(0, 120) : null,
+      like_count: post.like_count ?? 0,
+      comments_count: post.comments_count ?? 0,
       created_at: post.timestamp,
     }));
 

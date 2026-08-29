@@ -40,6 +40,8 @@ export interface BookPost {
   thumbnail_url: string;
   video_url: string | null;
   titulo: string | null;
+  like_count: number | null;
+  comments_count: number | null;
   created_at: string;
 }
 

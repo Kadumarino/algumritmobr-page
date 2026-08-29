@@ -34,9 +34,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <script>
   import { supabase, supabaseEnabled, type BookPost } from '../lib/supabase';
 
+  // Garante que só um vídeo toca por vez: ao iniciar um, pausa o que estava tocando.
+  let videoTocando: HTMLVideoElement | null = null;
+
   function criarCard(post: BookPost): HTMLDivElement {
     const card = document.createElement('div');
     card.className = 'book-card';
+
+    const media = document.createElement('div');
+    media.className = 'book-card-media';
+    card.appendChild(media);
 
     if (post.tipo === 'video' && post.video_url) {
       const video = document.createElement('video');
@@ -48,14 +55,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       source.src = post.video_url;
       source.type = 'video/mp4';
       video.appendChild(source);
-      card.appendChild(video);
+      media.appendChild(video);
+
+      video.addEventListener('play', () => {
+        if (videoTocando && videoTocando !== video) {
+          videoTocando.pause();
+        }
+        videoTocando = video;
+      });
 
       // Primeiro clique ou Enter/Espaço (com o card focado) já inicia a reprodução.
       // O listener roda só uma vez para não atrapalhar os controles nativos (pause, volume etc).
-      card.tabIndex = 0;
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', post.titulo ? `Reproduzir vídeo: ${post.titulo}` : 'Reproduzir vídeo');
-      card.addEventListener(
+      media.tabIndex = 0;
+      media.setAttribute('role', 'button');
+      media.setAttribute('aria-label', post.titulo ? `Reproduzir vídeo: ${post.titulo}` : 'Reproduzir vídeo');
+      media.addEventListener(
         'click',
         () => {
           video.play().catch((err) => {
@@ -64,7 +78,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         },
         { once: true }
       );
-      card.addEventListener(
+      media.addEventListener(
         'keydown',
         (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -84,7 +98,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       img.src = post.thumbnail_url;
       img.loading = 'lazy';
       img.alt = post.titulo || 'Publicação do Instagram — Algum Ritmo';
-      card.appendChild(img);
+      media.appendChild(img);
     }
 
     const badge = document.createElement('span');
@@ -94,14 +108,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       post.tipo === 'video'
         ? '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
         : '<svg viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><path d="M8 4h9a2 2 0 0 1 2 2v9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
-    card.appendChild(badge);
+    media.appendChild(badge);
 
     if (post.titulo) {
       const legenda = document.createElement('span');
       legenda.className = 'book-legenda';
       legenda.textContent = post.titulo;
-      card.appendChild(legenda);
+      media.appendChild(legenda);
     }
+
+    // Barra de ações estilo Instagram (curtidas e comentários), abaixo da mídia.
+    const acoes = document.createElement('div');
+    acoes.className = 'book-card-actions';
+    acoes.innerHTML = `
+      <span class="book-action">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.7-4.35-9.33-8.4C1.02 9.28 2.1 5.6 5.6 4.7c2-.52 4 .3 5.1 2 .1.15.2.15.3 0 1.1-1.7 3.1-2.52 5.1-2 3.5.9 4.58 4.58 2.93 7.9C18.7 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        ${post.like_count ?? 0}
+      </span>
+      <span class="book-action">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12c0 4.418-4.03 8-9 8-1.06 0-2.07-.16-3-.46L3 21l1.6-4.8A7.94 7.94 0 0 1 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        ${post.comments_count ?? 0}
+      </span>
+      <a class="book-action book-action--link" href="${post.instagram_url}" target="_blank" rel="noopener noreferrer">Ver no Instagram</a>
+    `;
+    card.appendChild(acoes);
 
     return card;
   }

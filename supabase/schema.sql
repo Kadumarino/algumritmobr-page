@@ -110,10 +110,15 @@ grant execute on function public.decrementar_like(uuid) to anon;
 -- Regras de exibição (aplicadas no front-end, ver src/pages/book.astro):
 --   - pinned = true  -> sempre aparece primeiro, na seção "Destaques".
 --   - tipo = 'video' e pinned = false -> só os 6 mais recentes aparecem.
---   - tipo = 'foto'  e pinned = false -> só as 3 mais recentes aparecem no
---     carrossel de fotos (uma foto por vez, com botões de anterior/próximo).
+--   - tipo = 'foto'  e pinned = false -> só as 3 mais recentes aparecem lado
+--     a lado (grid), igual à seção de vídeos.
 -- O gatilho abaixo APAGA automaticamente o excedente mais antigo a cada
 -- inserção, então a tabela nunca acumula lixo — não precisa apagar na mão.
+--
+-- IMPORTANTE ao adicionar uma coluna nova (ex.: rodar este arquivo de novo
+-- depois de atualizado): o Supabase às vezes não percebe a coluna nova na
+-- API na hora. Se aparecer erro "column ... not found in schema cache",
+-- rode também: notify pgrst, 'reload schema';
 -- ============================================================================
 create table if not exists public.book_posts (
   id uuid primary key default gen_random_uuid(),
@@ -127,6 +132,11 @@ create table if not exists public.book_posts (
   -- coluna existir (nesse caso o card cai de volta para a miniatura).
   video_url text,
   titulo text,
+  -- Curtidas e comentários do post no Instagram (só informativo, exibido na
+  -- barrinha abaixo da foto/vídeo, como no Instagram). Atualizado a cada
+  -- sincronização; fica 0 para linhas antigas até o próximo sync.
+  like_count integer not null default 0,
+  comments_count integer not null default 0,
   -- ID da publicação no Instagram (preenchido só pelo job automático; linhas
   -- adicionadas manualmente pelo Table Editor ficam com isto null). Serve
   -- para o job saber "atualizar" em vez de duplicar a cada sincronização.
@@ -137,6 +147,8 @@ create table if not exists public.book_posts (
 -- Caso a tabela já exista de uma versão anterior deste schema (sem a coluna):
 alter table public.book_posts add column if not exists ig_media_id text unique;
 alter table public.book_posts add column if not exists video_url text;
+alter table public.book_posts add column if not exists like_count integer not null default 0;
+alter table public.book_posts add column if not exists comments_count integer not null default 0;
 
 create index if not exists book_posts_listagem_idx on public.book_posts (tipo, pinned, created_at desc);
 
