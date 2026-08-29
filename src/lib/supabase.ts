@@ -38,6 +38,7 @@ export interface BookPost {
   pinned: boolean;
   instagram_url: string;
   thumbnail_url: string;
+  video_url: string | null;
   titulo: string | null;
   created_at: string;
 }

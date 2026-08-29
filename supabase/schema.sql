@@ -110,8 +110,8 @@ grant execute on function public.decrementar_like(uuid) to anon;
 -- Regras de exibição (aplicadas no front-end, ver src/pages/book.astro):
 --   - pinned = true  -> sempre aparece primeiro, na seção "Destaques".
 --   - tipo = 'video' e pinned = false -> só os 6 mais recentes aparecem.
---   - tipo = 'foto'  e pinned = false -> até as 12 mais recentes aparecem no
---     carrossel de fotos (3 por página, com botões de anterior/próximo).
+--   - tipo = 'foto'  e pinned = false -> só as 3 mais recentes aparecem no
+--     carrossel de fotos (uma foto por vez, com botões de anterior/próximo).
 -- O gatilho abaixo APAGA automaticamente o excedente mais antigo a cada
 -- inserção, então a tabela nunca acumula lixo — não precisa apagar na mão.
 -- ============================================================================
@@ -121,6 +121,11 @@ create table if not exists public.book_posts (
   pinned boolean not null default false,
   instagram_url text not null,
   thumbnail_url text not null,
+  -- URL direta do arquivo de vídeo (mp4) na CDN do Instagram, usada para
+  -- tocar o vídeo direto na página (sem redirecionar para o Instagram).
+  -- Fica null para fotos e para linhas antigas sincronizadas antes desta
+  -- coluna existir (nesse caso o card cai de volta para a miniatura).
+  video_url text,
   titulo text,
   -- ID da publicação no Instagram (preenchido só pelo job automático; linhas
   -- adicionadas manualmente pelo Table Editor ficam com isto null). Serve
@@ -131,6 +136,7 @@ create table if not exists public.book_posts (
 
 -- Caso a tabela já exista de uma versão anterior deste schema (sem a coluna):
 alter table public.book_posts add column if not exists ig_media_id text unique;
+alter table public.book_posts add column if not exists video_url text;
 
 create index if not exists book_posts_listagem_idx on public.book_posts (tipo, pinned, created_at desc);
 
@@ -158,7 +164,7 @@ begin
     return new;
   end if;
 
-  limite := case when new.tipo = 'video' then 6 else 12 end;
+  limite := case when new.tipo = 'video' then 6 else 3 end;
 
   delete from public.book_posts
   where id in (

@@ -90,6 +90,7 @@ async function main() {
       pinned: false,
       instagram_url: post.permalink,
       thumbnail_url: post.thumbnail_url || post.media_url,
+      video_url: mapearTipo(post.media_type) === 'video' ? post.media_url : null,
       titulo: post.caption ? post.caption.slice(0, 120) : null,
       created_at: post.timestamp,
     }));

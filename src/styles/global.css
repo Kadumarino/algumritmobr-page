@@ -989,6 +989,14 @@ p {
   object-fit: cover;
 }
 
+.book-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background-color: #000;
+}
+
 .book-badge {
   position: absolute;
   top: var(--space-2);
@@ -1017,140 +1025,6 @@ p {
   color: var(--color-white);
   font-size: 0.85rem;
   font-weight: 600;
-}
-
-.book-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-3);
-}
-
-.book-modal.is-open {
-  display: flex;
-}
-
-.book-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(5, 5, 5, 0.85);
-}
-
-.book-modal__dialog {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  max-width: 540px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: var(--space-3);
-  border-radius: 12px;
-  background-color: var(--color-white);
-  box-shadow: var(--shadow-elegant);
-}
-
-.book-modal__close {
-  position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background-color: var(--color-off-white);
-  color: var(--color-black);
-  cursor: pointer;
-  transition: background-color var(--transition-base);
-  z-index: 1;
-}
-
-.book-modal__close:hover {
-  background-color: var(--color-gray-300);
-}
-
-.book-modal__close svg {
-  width: 18px;
-  height: 18px;
-}
-
-.book-modal__content {
-  width: 100%;
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.book-modal__link {
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-navy);
-}
-
-.book-modal__link:hover {
-  color: var(--color-gold);
-}
-
-.book-modal__profile-link {
-  align-self: center;
-  padding: 0.55rem 1.5rem;
-  font-size: 0.8rem;
-}
-
-.book-carousel-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-}
-
-.book-carousel-slot {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-  min-width: 0;
-}
-
-.book-carousel-slot .book-card {
-  width: 100%;
-  max-width: 320px;
-}
-
-.book-carousel-btn {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: 2px solid var(--color-gray-300);
-  border-radius: 50%;
-  background-color: var(--color-off-white);
-  color: var(--color-black);
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background-color var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
-}
-
-.book-carousel-btn:hover:not(:disabled) {
-  border-color: var(--color-gold);
-  transform: scale(1.08);
-}
-
-.book-carousel-btn:disabled {
-  opacity: 0.3;
-  cursor: default;
 }
 
 .video-grid {
