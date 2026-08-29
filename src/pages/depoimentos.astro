@@ -24,10 +24,11 @@ const base = import.meta.env.BASE_URL;
         {
           depoimentos.map((item) => (
             <div class="testimonial-card">
-              <span class="quote-mark">&ldquo;</span>
-              <p>{item.data.texto}</p>
+              <svg class="quote-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
+              </svg>
               <p class="autor">{item.data.nome}</p>
-              <p class="evento">{item.data.evento}</p>
+              <p class="testimonial-text">{item.data.texto}</p>
             </div>
           ))
         }
@@ -47,7 +48,7 @@ const base = import.meta.env.BASE_URL;
     <div class="container">
       <div class="section-title">
         <span class="eyebrow">Comentários</span>
-        <h2>O que dizem no Instagram</h2>
+        <h2>O que acham da Algum Ritmo?</h2>
         <p>Deixe seu @ e um comentário — depois de uma breve revisão, ele aparece aqui.</p>
       </div>
 
@@ -141,6 +142,20 @@ const base = import.meta.env.BASE_URL;
     return link;
   }
 
+  function criarQuoteIcon(): SVGSVGElement {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'quote-icon');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute(
+      'd',
+      'M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z'
+    );
+    svg.appendChild(path);
+    return svg;
+  }
+
   async function carregarDepoimentosComunidade() {
     const container = document.getElementById('community-depoimentos');
     if (!container || !supabaseEnabled || !supabase) return;
@@ -157,22 +172,15 @@ const base = import.meta.env.BASE_URL;
       const card = document.createElement('div');
       card.className = 'testimonial-card testimonial-card--community';
 
-      const header = document.createElement('div');
-      header.className = 'community-header';
-      header.append(criarAvatar(item.instagram), linkInstagram(item.instagram));
-
-      const quote = document.createElement('span');
-      quote.className = 'quote-mark';
-      quote.textContent = '\u201c';
-
-      const texto = document.createElement('p');
-      texto.textContent = item.texto;
-
       const autor = document.createElement('p');
       autor.className = 'autor';
       autor.textContent = item.nome;
 
-      card.append(header, quote, texto, autor);
+      const texto = document.createElement('p');
+      texto.className = 'testimonial-text';
+      texto.textContent = item.texto;
+
+      card.append(criarQuoteIcon(), autor, texto);
       container.appendChild(card);
     }
   }

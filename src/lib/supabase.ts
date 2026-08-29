@@ -32,6 +32,16 @@ export interface Comentario {
   created_at: string;
 }
 
+export interface BookPost {
+  id: string;
+  tipo: 'video' | 'foto';
+  pinned: boolean;
+  instagram_url: string;
+  thumbnail_url: string;
+  titulo: string | null;
+  created_at: string;
+}
+
 /** Gera uma cor HSL estável a partir de uma string (ex.: @instagram). */
 export function corAvatar(seed: string): string {
   let hash = 0;

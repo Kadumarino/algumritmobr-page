@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import instagramPosts from '../data/instagram-posts.json';
 ---
 
 <BaseLayout
@@ -15,19 +14,90 @@ import instagramPosts from '../data/instagram-posts.json';
         <p>Um pouco do que é viver a experiência Algum Ritmo ao vivo, direto do nosso Instagram.</p>
       </div>
 
-      <div class="instagram-grid">
-        {
-          instagramPosts.map((post) => (
-            <blockquote
-              class="instagram-media"
-              data-instgrm-permalink={post.url}
-              data-instgrm-version="14"
-            />
-          ))
-        }
+      <div id="book-pinned" class="grid grid--3 book-grid"></div>
+
+      <div class="section-title book-subtitle">
+        <h2>Últimos vídeos</h2>
       </div>
+      <div id="book-videos" class="grid grid--3 book-grid"></div>
+
+      <div class="section-title book-subtitle">
+        <h2>Fotos</h2>
+      </div>
+      <div id="book-fotos" class="grid grid--3 book-grid"></div>
+
+      <p id="book-msg" class="form-msg" role="status" />
     </div>
   </section>
 </BaseLayout>
 
-<script async src="https://www.instagram.com/embed.js" is:inline></script>
+<script>
+  import { supabase, supabaseEnabled, type BookPost } from '../lib/supabase';
+
+  function criarCard(post: BookPost): HTMLAnchorElement {
+    const card = document.createElement('a');
+    card.className = 'book-card';
+    card.href = post.instagram_url;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+
+    const img = document.createElement('img');
+    img.src = post.thumbnail_url;
+    img.loading = 'lazy';
+    img.alt = post.titulo || 'Publicação do Instagram — Algum Ritmo';
+    card.appendChild(img);
+
+    const badge = document.createElement('span');
+    badge.className = 'book-badge';
+    badge.setAttribute('aria-hidden', 'true');
+    badge.innerHTML =
+      post.tipo === 'video'
+        ? '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
+        : '<svg viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><path d="M8 4h9a2 2 0 0 1 2 2v9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+    card.appendChild(badge);
+
+    if (post.titulo) {
+      const legenda = document.createElement('span');
+      legenda.className = 'book-legenda';
+      legenda.textContent = post.titulo;
+      card.appendChild(legenda);
+    }
+
+    return card;
+  }
+
+  async function carregarBook() {
+    const pinnedEl = document.getElementById('book-pinned');
+    const videosEl = document.getElementById('book-videos');
+    const fotosEl = document.getElementById('book-fotos');
+    const msg = document.getElementById('book-msg');
+    if (!pinnedEl || !videosEl || !fotosEl) return;
+
+    if (!supabaseEnabled || !supabase) {
+      if (msg) msg.textContent = 'Galeria indisponível no momento.';
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('book_posts')
+      .select('id, tipo, pinned, instagram_url, thumbnail_url, titulo, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error || !data) {
+      if (msg) msg.textContent = 'Não foi possível carregar a galeria.';
+      return;
+    }
+
+    const posts = data as BookPost[];
+    const pinned = posts.filter((post) => post.pinned);
+    const videos = posts.filter((post) => !post.pinned && post.tipo === 'video').slice(0, 6);
+    const fotos = posts.filter((post) => !post.pinned && post.tipo === 'foto').slice(0, 3);
+
+    pinned.forEach((post) => pinnedEl.appendChild(criarCard(post)));
+    videos.forEach((post) => videosEl.appendChild(criarCard(post)));
+    fotos.forEach((post) => fotosEl.appendChild(criarCard(post)));
+  }
+
+  carregarBook();
+</script>
+

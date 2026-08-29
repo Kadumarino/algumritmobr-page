@@ -97,3 +97,90 @@ grant execute on function public.decrementar_like(uuid) to anon;
 --   update public.comentarios set status = 'approved' where id = 'COLE-O-ID-AQUI';
 -- Para rejeitar/apagar, use "delete from ... where id = '...'" no lugar do update.
 -- ============================================================================
+
+-- ============================================================================
+-- Book — fotos e vídeos em destaque na página /book/. As linhas são
+-- preenchidas automaticamente por um job agendado (ver scripts/sync-instagram.mjs
+-- e .github/workflows/sync-instagram.yml) que busca os posts recentes do
+-- Instagram pela Graph API oficial da Meta e grava aqui usando a
+-- service_role key (nunca a anon key, e nunca rodando no navegador). Também
+-- é possível adicionar/editar linhas manualmente pelo Table Editor do
+-- Supabase (ex.: para os posts "fixados").
+--
+-- Regras de exibição (aplicadas no front-end, ver src/pages/book.astro):
+--   - pinned = true  -> sempre aparece primeiro, na seção "Destaques".
+--   - tipo = 'video' e pinned = false -> só os 6 mais recentes aparecem.
+--   - tipo = 'foto'  e pinned = false -> só os 3 mais recentes aparecem.
+-- O gatilho abaixo APAGA automaticamente o excedente mais antigo a cada
+-- inserção, então a tabela nunca acumula lixo — não precisa apagar na mão.
+-- ============================================================================
+create table if not exists public.book_posts (
+  id uuid primary key default gen_random_uuid(),
+  tipo text not null check (tipo in ('video', 'foto')),
+  pinned boolean not null default false,
+  instagram_url text not null,
+  thumbnail_url text not null,
+  titulo text,
+  -- ID da publicação no Instagram (preenchido só pelo job automático; linhas
+  -- adicionadas manualmente pelo Table Editor ficam com isto null). Serve
+  -- para o job saber "atualizar" em vez de duplicar a cada sincronização.
+  ig_media_id text unique,
+  created_at timestamptz not null default now()
+);
+
+-- Caso a tabela já exista de uma versão anterior deste schema (sem a coluna):
+alter table public.book_posts add column if not exists ig_media_id text unique;
+
+create index if not exists book_posts_listagem_idx on public.book_posts (tipo, pinned, created_at desc);
+
+alter table public.book_posts enable row level security;
+
+-- Leitura é pública (é conteúdo de divulgação, não há dado sensível).
+-- Não existe policy de insert/update/delete para "anon": só é possível
+-- adicionar/editar/remover linhas logado no painel do Supabase (dashboard)
+-- ou com a service_role key, nunca pelo navegador do visitante.
+create policy "select_book_posts" on public.book_posts
+  for select using (true);
+
+grant select on public.book_posts to anon;
+
+create or replace function public.limpar_book_posts_excedentes()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  limite integer;
+begin
+  if new.pinned then
+    return new;
+  end if;
+
+  limite := case when new.tipo = 'video' then 6 else 3 end;
+
+  delete from public.book_posts
+  where id in (
+    select id from public.book_posts
+    where tipo = new.tipo and pinned = false
+    order by created_at desc
+    offset limite
+  );
+
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_limpar_book_posts_excedentes on public.book_posts;
+create trigger trg_limpar_book_posts_excedentes
+after insert on public.book_posts
+for each row
+execute function public.limpar_book_posts_excedentes();
+
+-- Exemplo de como adicionar uma publicação nova (rode no SQL Editor,
+-- trocando os valores): os 2 vídeos fixados usam pinned = true e nunca são
+-- removidos automaticamente.
+--   insert into public.book_posts (tipo, pinned, instagram_url, thumbnail_url, titulo) values
+--     ('video', true, 'https://www.instagram.com/reel/XXXXXXX/', 'https://SEU-BUCKET/thumb.jpg', 'Show no Hotel X');
+-- ============================================================================
+
