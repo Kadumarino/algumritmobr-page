@@ -24,22 +24,89 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="section-title book-subtitle">
         <h2>Fotos</h2>
       </div>
-      <div id="book-fotos" class="grid grid--3 book-grid"></div>
+      <div class="book-carousel-wrapper">
+        <button class="book-carousel-btn book-carousel-prev" aria-label="Foto anterior" disabled>&#8249;</button>
+        <div id="book-fotos" class="book-carousel-track"></div>
+        <button class="book-carousel-btn book-carousel-next" aria-label="Pr&#243;xima foto" disabled>&#8250;</button>
+      </div>
 
       <p id="book-msg" class="form-msg" role="status" />
     </div>
   </section>
+
+  <div id="book-modal" class="book-modal">
+    <div class="book-modal__backdrop" data-close></div>
+    <div class="book-modal__dialog" role="dialog" aria-modal="true" aria-label="Publicação do Instagram">
+      <button type="button" class="book-modal__close" data-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="book-modal__content" id="book-modal-content"></div>
+      <a class="book-modal__link" id="book-modal-link" href="#" target="_blank" rel="noopener noreferrer">
+        Ver no Instagram ↗
+      </a>
+    </div>
+  </div>
 </BaseLayout>
 
 <script>
   import { supabase, supabaseEnabled, type BookPost } from '../lib/supabase';
 
-  function criarCard(post: BookPost): HTMLAnchorElement {
-    const card = document.createElement('a');
+  declare global {
+    interface Window {
+      instgrm?: { Embeds: { process: () => void } };
+    }
+  }
+
+  let embedScriptCarregado = false;
+
+  function carregarEmbedScript(): void {
+    if (embedScriptCarregado) {
+      window.instgrm?.Embeds.process();
+      return;
+    }
+    embedScriptCarregado = true;
+    const script = document.createElement('script');
+    script.src = 'https://www.instagram.com/embed.js';
+    script.async = true;
+    script.onload = () => window.instgrm?.Embeds.process();
+    document.body.appendChild(script);
+  }
+
+  function abrirModal(post: BookPost): void {
+    const modal = document.getElementById('book-modal');
+    const content = document.getElementById('book-modal-content');
+    const link = document.getElementById('book-modal-link') as HTMLAnchorElement | null;
+    if (!modal || !content || !link) return;
+
+    link.href = post.instagram_url;
+    content.innerHTML = `
+      <blockquote
+        class="instagram-media"
+        data-instgrm-permalink="${post.instagram_url}"
+        data-instgrm-version="14"
+        style="margin: 0; width: 100%;"
+      ></blockquote>
+    `;
+
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    carregarEmbedScript();
+  }
+
+  function fecharModal(): void {
+    const modal = document.getElementById('book-modal');
+    const content = document.getElementById('book-modal-content');
+    if (!modal || !content) return;
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    content.innerHTML = '';
+  }
+
+  function criarCard(post: BookPost): HTMLButtonElement {
+    const card = document.createElement('button');
+    card.type = 'button';
     card.className = 'book-card';
-    card.href = post.instagram_url;
-    card.target = '_blank';
-    card.rel = 'noopener noreferrer';
+    card.addEventListener('click', () => abrirModal(post));
 
     const img = document.createElement('img');
     img.src = post.thumbnail_url;
@@ -70,6 +137,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const pinnedEl = document.getElementById('book-pinned');
     const videosEl = document.getElementById('book-videos');
     const fotosEl = document.getElementById('book-fotos');
+    const prevBtn = document.querySelector('.book-carousel-prev') as HTMLButtonElement | null;
+    const nextBtn = document.querySelector('.book-carousel-next') as HTMLButtonElement | null;
     const msg = document.getElementById('book-msg');
     if (!pinnedEl || !videosEl || !fotosEl) return;
 
@@ -91,12 +160,45 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const posts = data as BookPost[];
     const pinned = posts.filter((post) => post.pinned);
     const videos = posts.filter((post) => !post.pinned && post.tipo === 'video').slice(0, 6);
-    const fotos = posts.filter((post) => !post.pinned && post.tipo === 'foto').slice(0, 3);
+    const fotos = posts.filter((post) => !post.pinned && post.tipo === 'foto');
 
     pinned.forEach((post) => pinnedEl.appendChild(criarCard(post)));
     videos.forEach((post) => videosEl.appendChild(criarCard(post)));
-    fotos.forEach((post) => fotosEl.appendChild(criarCard(post)));
+
+    // Carrossel de fotos: mostra 3 por vez, com botões de anterior/próximo.
+    const POR_PAGINA = 3;
+    let pagina = 0;
+    const totalPaginas = Math.max(1, Math.ceil(fotos.length / POR_PAGINA));
+
+    function renderPaginaFotos() {
+      if (!fotosEl) return;
+      fotosEl.innerHTML = '';
+      const inicio = pagina * POR_PAGINA;
+      fotos.slice(inicio, inicio + POR_PAGINA).forEach((post) => fotosEl.appendChild(criarCard(post)));
+      if (prevBtn) prevBtn.disabled = pagina === 0;
+      if (nextBtn) nextBtn.disabled = pagina >= totalPaginas - 1;
+    }
+
+    renderPaginaFotos();
+
+    prevBtn?.addEventListener('click', () => {
+      if (pagina > 0) {
+        pagina -= 1;
+        renderPaginaFotos();
+      }
+    });
+    nextBtn?.addEventListener('click', () => {
+      if (pagina < totalPaginas - 1) {
+        pagina += 1;
+        renderPaginaFotos();
+      }
+    });
   }
+
+  document.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', fecharModal));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') fecharModal();
+  });
 
   carregarBook();
 </script>

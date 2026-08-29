@@ -110,7 +110,8 @@ grant execute on function public.decrementar_like(uuid) to anon;
 -- Regras de exibição (aplicadas no front-end, ver src/pages/book.astro):
 --   - pinned = true  -> sempre aparece primeiro, na seção "Destaques".
 --   - tipo = 'video' e pinned = false -> só os 6 mais recentes aparecem.
---   - tipo = 'foto'  e pinned = false -> só os 3 mais recentes aparecem.
+--   - tipo = 'foto'  e pinned = false -> até as 12 mais recentes aparecem no
+--     carrossel de fotos (3 por página, com botões de anterior/próximo).
 -- O gatilho abaixo APAGA automaticamente o excedente mais antigo a cada
 -- inserção, então a tabela nunca acumula lixo — não precisa apagar na mão.
 -- ============================================================================
@@ -157,7 +158,7 @@ begin
     return new;
   end if;
 
-  limite := case when new.tipo = 'video' then 6 else 3 end;
+  limite := case when new.tipo = 'video' then 6 else 12 end;
 
   delete from public.book_posts
   where id in (

@@ -962,16 +962,25 @@ p {
   position: relative;
   display: flex;
   aspect-ratio: 4 / 5;
-  border: 1px solid var(--color-gray-300);
-  border-radius: 4px;
+  border: 2px solid var(--color-gray-300);
+  border-radius: 12px;
   overflow: hidden;
   background-color: var(--color-off-white);
-  transition: box-shadow var(--transition-base), transform var(--transition-base);
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(10, 10, 10, 0.08);
+  transition: box-shadow var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
 }
 
-.book-card:hover {
+.book-card:hover,
+.book-card:focus-visible {
   box-shadow: var(--shadow-elegant);
   transform: translateY(-4px);
+  border-color: var(--color-gold);
+  outline: none;
 }
 
 .book-card img {
@@ -1008,6 +1017,135 @@ p {
   color: var(--color-white);
   font-size: 0.85rem;
   font-weight: 600;
+}
+
+.book-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+}
+
+.book-modal.is-open {
+  display: flex;
+}
+
+.book-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(5, 5, 5, 0.85);
+}
+
+.book-modal__dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-3);
+  border-radius: 12px;
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-elegant);
+}
+
+.book-modal__close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-off-white);
+  color: var(--color-black);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  z-index: 1;
+}
+
+.book-modal__close:hover {
+  background-color: var(--color-gray-300);
+}
+
+.book-modal__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.book-modal__content {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-modal__link {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.book-modal__link:hover {
+  color: var(--color-gold);
+}
+
+.book-carousel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.book-carousel-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .book-carousel-track {
+    grid-template-columns: 1fr;
+  }
+}
+
+.book-carousel-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--color-gray-300);
+  border-radius: 50%;
+  background-color: var(--color-off-white);
+  color: var(--color-black);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+}
+
+.book-carousel-btn:hover:not(:disabled) {
+  border-color: var(--color-gold);
+  transform: scale(1.08);
+}
+
+.book-carousel-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 
 .video-grid {
