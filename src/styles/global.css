@@ -1101,24 +1101,29 @@ p {
   color: var(--color-gold);
 }
 
+.book-modal__profile-link {
+  align-self: center;
+  padding: 0.55rem 1.5rem;
+  font-size: 0.8rem;
+}
+
 .book-carousel-wrapper {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
 }
 
-.book-carousel-track {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-3);
+.book-carousel-slot {
+  display: flex;
+  justify-content: center;
   flex: 1;
   min-width: 0;
 }
 
-@media (max-width: 700px) {
-  .book-carousel-track {
-    grid-template-columns: 1fr;
-  }
+.book-carousel-slot .book-card {
+  width: 100%;
+  max-width: 320px;
 }
 
 .book-carousel-btn {

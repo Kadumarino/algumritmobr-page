@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
 ---
 
 <BaseLayout
@@ -26,7 +27,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <div class="book-carousel-wrapper">
         <button class="book-carousel-btn book-carousel-prev" aria-label="Foto anterior" disabled>&#8249;</button>
-        <div id="book-fotos" class="book-carousel-track"></div>
+        <div id="book-fotos" class="book-carousel-slot"></div>
         <button class="book-carousel-btn book-carousel-next" aria-label="Pr&#243;xima foto" disabled>&#8250;</button>
       </div>
 
@@ -40,6 +41,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <button type="button" class="book-modal__close" data-close aria-label="Fechar">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
+      <a
+        class="book-modal__profile-link btn btn-primary"
+        href={siteConfig.instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Visitar perfil no Instagram ↗
+      </a>
       <div class="book-modal__content" id="book-modal-content"></div>
       <a class="book-modal__link" id="book-modal-link" href="#" target="_blank" rel="noopener noreferrer">
         Ver no Instagram ↗
@@ -165,32 +174,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     pinned.forEach((post) => pinnedEl.appendChild(criarCard(post)));
     videos.forEach((post) => videosEl.appendChild(criarCard(post)));
 
-    // Carrossel de fotos: mostra 3 por vez, com botões de anterior/próximo.
-    const POR_PAGINA = 3;
-    let pagina = 0;
-    const totalPaginas = Math.max(1, Math.ceil(fotos.length / POR_PAGINA));
+    // Carrossel de fotos: mostra 1 foto por vez, com botões de anterior/próximo.
+    let idx = 0;
 
-    function renderPaginaFotos() {
+    function renderFoto() {
       if (!fotosEl) return;
       fotosEl.innerHTML = '';
-      const inicio = pagina * POR_PAGINA;
-      fotos.slice(inicio, inicio + POR_PAGINA).forEach((post) => fotosEl.appendChild(criarCard(post)));
-      if (prevBtn) prevBtn.disabled = pagina === 0;
-      if (nextBtn) nextBtn.disabled = pagina >= totalPaginas - 1;
+      if (fotos.length === 0) return;
+      fotosEl.appendChild(criarCard(fotos[idx]));
+      if (prevBtn) prevBtn.disabled = idx === 0;
+      if (nextBtn) nextBtn.disabled = idx >= fotos.length - 1;
     }
 
-    renderPaginaFotos();
+    renderFoto();
 
     prevBtn?.addEventListener('click', () => {
-      if (pagina > 0) {
-        pagina -= 1;
-        renderPaginaFotos();
+      if (idx > 0) {
+        idx -= 1;
+        renderFoto();
       }
     });
     nextBtn?.addEventListener('click', () => {
-      if (pagina < totalPaginas - 1) {
-        pagina += 1;
-        renderPaginaFotos();
+      if (idx < fotos.length - 1) {
+        idx += 1;
+        renderFoto();
       }
     });
   }
